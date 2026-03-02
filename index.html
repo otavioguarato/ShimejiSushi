@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Cardápio Digital</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; color: #333; }
+        header { text-align: center; padding: 20px; background: #e67e22; color: white; border-radius: 10px; margin-bottom: 20px; }
+        .categoria { background: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        h2 { color: #e67e22; border-bottom: 2px solid #f4f4f4; padding-bottom: 5px; }
+        .item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed #ddd; }
+        .item:last-child { border-bottom: none; }
+        .nome-prato { font-weight: bold; font-size: 1.1em; }
+        .preco { color: #27ae60; font-weight: bold; }
+        .descricao { font-size: 0.9em; color: #777; display: block; }
+        footer { text-align: center; margin-top: 30px; font-size: 0.8em; color: #999; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Sabor & Arte</h1>
+        <p>Aberto de Terça a Domingo - 18h às 23h</p>
+    </header>
+
+    <div class="categoria">
+        <h2>🍔 Hambúrgueres</h2>
+        <div class="item">
+            <div>
+                <span class="nome-prato">Classic Burger</span>
+                <span class="descricao">Pão brioche, blend 160g, queijo e maionese.</span>
+            </div>
+            <span class="preco">R$ 28,00</span>
+        </div>
+        <div class="item">
+            <div>
+                <span class="nome-prato">Bacon Deluxe</span>
+                <span class="descricao">Blend 160g, muito bacon crocante e cheddar.</span>
+            </div>
+            <span class="preco">R$ 34,00</span>
+        </div>
+    </div>
+
+    <div class="categoria">
+        <h2>🥤 Bebidas</h2>
+        <div class="item">
+            <div><span class="nome-prato">Refrigerante Lata</span></div>
+            <span class="preco">R$ 6,00</span>
+        </div>
+        <div class="item">
+            <div><span class="nome-prato">Suco Natural (Laranja)</span></div>
+            <span class="preco">R$ 10,00</span>
+        </div>
+    </div>
+
+    <footer>
+        <p>Feito com ❤️ via GitHub Pages</p>
+    </footer>
+
+</body>
+</html>
