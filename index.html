@@ -1,73 +1,514 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShimejiSushi - Pedido Online</title>
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #121212; color: white; margin: 0; padding-bottom: 80px; }
-        .header { background: #e74c3c; padding: 20px; text-align: center; border-radius: 0 0 20px 20px; }
-        .container { padding: 15px; }
-        .produto { background: #1e1e1e; padding: 15px; margin-bottom: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #333; }
-        .price { color: #f1c40f; font-weight: bold; }
-        button { background: #e74c3c; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; }
-        .carrinho-fixo { position: fixed; bottom: 0; width: 100%; background: #25d366; color: white; padding: 15px; text-align: center; font-weight: bold; text-decoration: none; display: none; }
-        .pix-section { background: #2d2d2d; padding: 15px; border-radius: 10px; margin-top: 20px; text-align: center; border: 1px dashed #f1c40f; }
-    </style>
-</head>
-<body>
-
-<div class="header">
-    <h1>🍣 ShimejiSushi</h1>
-    <p>Escolha suas delícias</p>
-</div>
-
-<div class="container">
-    <div class="produto">
-        <div><strong>Combo 20 Peças</strong><br><span class="price">R$ 59,90</span></div>
-        <button onclick="add('Combo 20 Peças', 59.90)">+ Adicionar</button>
+<!doctype html>
+<html lang="pt-BR" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cardápio Digital - Sushi Delivery</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Noto+Sans+JP:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    .font-display { font-family: 'Playfair Display', serif; }
+    .font-body { font-family: 'Noto Sans JP', sans-serif; }
+    
+    .category-btn.active {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .cart-badge {
+      animation: pulse 0.3s ease-out;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .cart-panel { animation: slideIn 0.3s ease-out; }
+    .menu-item { animation: fadeIn 0.4s ease-out backwards; }
+    .menu-item:nth-child(1) { animation-delay: 0.05s; }
+    .menu-item:nth-child(2) { animation-delay: 0.1s; }
+    .menu-item:nth-child(3) { animation-delay: 0.15s; }
+    .menu-item:nth-child(4) { animation-delay: 0.2s; }
+    .menu-item:nth-child(5) { animation-delay: 0.25s; }
+    .menu-item:nth-child(6) { animation-delay: 0.3s; }
+    
+    .wave-pattern {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23dc2626' fill-opacity='0.1' d='M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+      background-size: cover;
+      background-position: bottom;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full font-body">
+  <div id="app" class="h-full overflow-auto" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);"><!-- Header -->
+   <header class="relative overflow-hidden" style="background: linear-gradient(to right, #b91c1c, #dc2626, #b91c1c);">
+    <div class="absolute inset-0 opacity-20">
+     <svg class="w-full h-full" viewbox="0 0 100 100" preserveaspectratio="none"><circle cx="10" cy="20" r="2" fill="white" /> <circle cx="30" cy="60" r="1.5" fill="white" /> <circle cx="70" cy="30" r="2" fill="white" /> <circle cx="90" cy="70" r="1" fill="white" /> <circle cx="50" cy="80" r="1.5" fill="white" />
+     </svg>
     </div>
-
-    <div class="produto">
-        <div><strong>Shimeji na Manteiga</strong><br><span class="price">R$ 35,00</span></div>
-        <button onclick="add('Shimeji na Manteiga', 35.00)">+ Adicionar</button>
+    <div class="relative px-4 py-6 md:py-8">
+     <div class="max-w-4xl mx-auto text-center">
+      <div class="flex items-center justify-center gap-3 mb-2">
+       <svg class="w-10 h-10 md:w-12 md:h-12 text-white" viewbox="0 0 64 64" fill="currentColor"><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="currentColor" stroke-width="2" /> <ellipse cx="32" cy="32" rx="20" ry="8" /> <circle cx="24" cy="32" r="3" fill="#dc2626" /> <circle cx="32" cy="30" r="2.5" fill="#f97316" /> <circle cx="40" cy="32" r="3" fill="#dc2626" /> <rect x="16" y="44" width="4" height="12" rx="2" fill="currentColor" /> <rect x="44" y="44" width="4" height="12" rx="2" fill="currentColor" />
+       </svg>
+       <h1 id="restaurant-name" class="font-display text-3xl md:text-4xl font-bold text-white tracking-wide">🍄 Shimeji Sushi Delivery</h1>
+      </div>
+      <p id="restaurant-slogan" class="text-red-100 text-sm md:text-base font-light tracking-widest">Sabor autêntico do Japão entregue na sua casa</p>
+      <div id="delivery-info" class="mt-3 inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-white text-sm">
+       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+       </svg><span>Entrega: 40-60 min • Grátis acima de R$80</span>
+      </div>
+     </div>
+    </div><!-- Cart Button Mobile --> <button id="cart-btn-mobile" onclick="toggleCart()" class="md:hidden absolute top-4 right-4 bg-white/20 backdrop-blur-sm p-2.5 rounded-full text-white hover:bg-white/30 transition-all">
+     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+     </svg><span id="cart-badge-mobile" class="cart-badge absolute -top-1 -right-1 bg-yellow-400 text-gray-900 text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center hidden">0</span> </button>
+   </header><!-- Main Content -->
+   <main class="max-w-6xl mx-auto px-4 py-6"><!-- Category Filter -->
+    <div class="flex gap-2 overflow-x-auto pb-4 scrollbar-hide mb-6"><button onclick="filterCategory('all')" class="category-btn active flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="all"> 🍱 Todos </button> <button onclick="filterCategory('combos')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="combos"> 🎁 Combos </button> <button onclick="filterCategory('sushis')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="sushis"> 🍣 Sushis </button> <button onclick="filterCategory('sashimis')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="sashimis"> 🐟 Sashimis </button> <button onclick="filterCategory('temakis')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="temakis"> 🌯 Temakis </button> <button onclick="filterCategory('hot')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="hot"> 🔥 Hot Rolls </button> <button onclick="filterCategory('bebidas')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="bebidas"> 🥤 Bebidas </button>
     </div>
-
-    <div class="produto">
-        <div><strong>Temaki Salmão</strong><br><span class="price">R$ 28,00</span></div>
-        <button onclick="add('Temaki Salmão', 28.00)">+ Adicionar</button>
+    <div class="flex gap-6"><!-- Menu Grid -->
+     <div class="flex-1">
+      <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"><!-- Items will be rendered here -->
+      </div>
+     </div><!-- Cart Sidebar Desktop -->
+     <aside id="cart-sidebar" class="hidden md:block w-80 flex-shrink-0">
+      <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 sticky top-4 border border-white/10">
+       <div class="flex items-center gap-2 mb-4">
+        <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        <h2 class="text-white font-semibold">Seu Pedido</h2><span id="cart-count-desktop" class="ml-auto bg-red-600 text-white text-xs px-2 py-0.5 rounded-full">0</span>
+       </div>
+       <div id="cart-items-desktop" class="space-y-3 max-h-64 overflow-y-auto mb-4">
+        <p class="text-gray-400 text-sm text-center py-4">Carrinho vazio</p>
+       </div>
+       <div class="border-t border-white/10 pt-4 mb-4">
+        <label class="block text-white text-sm font-medium mb-2">📍 Endereço</label> <input id="address-desktop" type="text" placeholder="Rua, número, bairro..." class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all">
+       </div>
+       <div class="border-b border-white/10 pb-4">
+        <label class="block text-white text-sm font-medium mb-2">💳 Forma de Pagamento</label> <select id="payment-desktop" class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all"> <option value="" class="bg-gray-900">Selecione a forma de pagamento</option> <option value="dinheiro" class="bg-gray-900">💵 Dinheiro</option> <option value="cartao" class="bg-gray-900">💳 Cartão de Crédito</option> <option value="debito" class="bg-gray-900">🏧 Cartão de Débito</option> <option value="pix" class="bg-gray-900">📱 PIX</option> </select>
+       </div>
+       <div class="pt-4">
+        <div class="flex justify-between text-white mb-1"><span class="text-gray-300">Subtotal:</span> <span id="cart-subtotal-desktop">R$ 0,00</span>
+        </div>
+        <div class="flex justify-between text-white mb-4"><span class="text-gray-300">Taxa de entrega:</span> <span id="delivery-fee-desktop" class="text-green-400">Grátis</span>
+        </div>
+        <div class="flex justify-between text-white font-bold text-lg mb-4"><span>Total:</span> <span id="cart-total-desktop">R$ 0,00</span>
+        </div><button id="checkout-btn-desktop" onclick="checkout()" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none" disabled>
+         <svg class="w-5 h-5" viewbox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+         </svg> Fazer Pedido </button>
+       </div>
+      </div>
+     </aside>
     </div>
-
-    <div class="pix-section">
-        <p>🔑 <strong>Chave PIX (E-mail ou Celular):</strong><br>seu-email@aqui.com</p>
-        <small>Pague e envie o comprovante pelo WhatsApp</small>
+   </main><!-- Cart Modal Mobile -->
+   <div id="cart-modal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="toggleCart()"></div>
+    <div class="cart-panel absolute right-0 top-0 h-full w-full max-w-md bg-gradient-to-b from-gray-900 to-gray-950 p-6 overflow-y-auto">
+     <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center gap-2">
+       <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+       </svg>
+       <h2 class="text-xl font-bold text-white">Seu Pedido</h2>
+      </div><button onclick="toggleCart()" class="text-gray-400 hover:text-white p-2">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+       </svg></button>
+     </div>
+     <div id="cart-items-mobile" class="space-y-4 mb-6">
+      <p class="text-gray-400 text-center py-8">Carrinho vazio</p>
+     </div>
+     <div class="border-t border-white/10 pt-4 mb-4">
+      <label class="block text-white text-sm font-medium mb-2">📍 Endereço</label> <input id="address-mobile" type="text" placeholder="Rua, número, bairro..." class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all">
+     </div>
+     <div class="border-b border-white/10 pb-4">
+      <label class="block text-white text-sm font-medium mb-2">💳 Forma de Pagamento</label> <select id="payment-mobile" class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all"> <option value="" class="bg-gray-900">Selecione a forma de pagamento</option> <option value="dinheiro" class="bg-gray-900">💵 Dinheiro</option> <option value="cartao" class="bg-gray-900">💳 Cartão de Crédito</option> <option value="debito" class="bg-gray-900">🏧 Cartão de Débito</option> <option value="pix" class="bg-gray-900">📱 PIX</option> </select>
+     </div>
+     <div class="pt-4 mt-auto">
+      <div class="flex justify-between text-white mb-2"><span class="text-gray-300">Subtotal:</span> <span id="cart-subtotal-mobile">R$ 0,00</span>
+      </div>
+      <div class="flex justify-between text-white mb-4"><span class="text-gray-300">Taxa de entrega:</span> <span id="delivery-fee-mobile" class="text-green-400">Grátis</span>
+      </div>
+      <div class="flex justify-between text-white font-bold text-xl mb-6"><span>Total:</span> <span id="cart-total-mobile">R$ 0,00</span>
+      </div><button id="checkout-btn-mobile" onclick="checkout()" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-4 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+       <svg class="w-6 h-6" viewbox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+       </svg> Fazer Pedido no WhatsApp </button>
+     </div>
     </div>
-</div>
+   </div><!-- Toast Notification -->
+   <div id="toast" class="fixed bottom-20 md:bottom-6 left-1/2 -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-2 transition-all transform translate-y-20 opacity-0 z-50">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+    </svg><span id="toast-message">Item adicionado!</span>
+   </div><!-- Floating Cart Button Mobile --> <button id="floating-cart" onclick="toggleCart()" class="md:hidden fixed bottom-6 right-6 bg-gradient-to-r from-red-500 to-red-600 text-white p-4 rounded-full shadow-2xl z-40 transition-all transform hover:scale-110 hidden">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+    </svg><span id="floating-cart-badge" class="absolute -top-1 -right-1 bg-yellow-400 text-gray-900 text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">0</span> </button>
+  </div>
+  <script>
+    // Menu data
+    const menuItems = [
+      // Combos
+      { id: 1, name: "Combo Philadelphia Gold", description: "21 peças: 10 hot-roll de salmão, 10 uramaki de salmão, 1 temaki Philadelphia", price: 69.90, category: "combos", emoji: "🎁", popular: true },
+      { id: 2, name: "Combo Família", description: "70 peças: 30 hot-roll de salmão, 10 uramaki de salmão, 10 uramaki de kani, 10 hossomaki de pepino, 10 hossomaki de cenoura", price: 99.90, category: "combos", emoji: "🎁", popular: true },
+      { id: 3, name: "Combo Casal", description: "50 peças: 20 hot-roll, 10 uramaki de salmão, 20 variados", price: 69.90, category: "combos", emoji: "🎁" },
+      
+      // Sushis
+      { id: 4, name: "Sushi Salmão", description: "2 unidades de sushi de salmão fresco", price: 12.90, category: "sushis", emoji: "🍣" },
+      { id: 5, name: "Sushi Atum", description: "2 unidades de sushi de atum premium", price: 14.90, category: "sushis", emoji: "🍣" },
+      { id: 6, name: "Sushi Camarão", description: "2 unidades de sushi de camarão", price: 13.90, category: "sushis", emoji: "🍣" },
+      { id: 7, name: "Sushi Polvo", description: "2 unidades de sushi de polvo", price: 15.90, category: "sushis", emoji: "🍣" },
+      { id: 8, name: "Niguiri Salmão", description: "4 unidades de niguiri de salmão", price: 18.90, category: "sushis", emoji: "🍣", popular: true },
+      
+      // Sashimis
+      { id: 9, name: "Sashimi Salmão", description: "8 fatias de salmão fresco", price: 32.90, category: "sashimis", emoji: "🐟", popular: true },
+      { id: 10, name: "Sashimi Atum", description: "8 fatias de atum premium", price: 38.90, category: "sashimis", emoji: "🐟" },
+      { id: 11, name: "Sashimi Peixe Branco", description: "8 fatias de peixe branco", price: 28.90, category: "sashimis", emoji: "🐟" },
+      { id: 12, name: "Sashimi Misto", description: "12 fatias: salmão, atum e peixe branco", price: 45.90, category: "sashimis", emoji: "🐟" },
+      
+      // Temakis
+      { id: 13, name: "Temaki Salmão", description: "Temaki de salmão com cream cheese", price: 24.90, category: "temakis", emoji: "🌯", popular: true },
+      { id: 14, name: "Temaki Atum", description: "Temaki de atum com cebolinha", price: 26.90, category: "temakis", emoji: "🌯" },
+      { id: 15, name: "Temaki Skin", description: "Temaki de pele de salmão crocante", price: 22.90, category: "temakis", emoji: "🌯" },
+      { id: 16, name: "Temaki Camarão", description: "Temaki de camarão empanado", price: 28.90, category: "temakis", emoji: "🌯" },
+      
+      // Hot Rolls
+      { id: 17, name: "Hot Philadelphia", description: "8 unidades empanadas com cream cheese", price: 32.90, category: "hot", emoji: "🔥", popular: true },
+      { id: 18, name: "Hot Salmão", description: "8 unidades empanadas de salmão", price: 34.90, category: "hot", emoji: "🔥" },
+      { id: 19, name: "Hot Camarão", description: "8 unidades empanadas de camarão", price: 36.90, category: "hot", emoji: "🔥" },
+      { id: 20, name: "Vulcão Roll", description: "8 unidades com cobertura gratinada", price: 38.90, category: "hot", emoji: "🔥" },
+      
+      // Bebidas
+      { id: 21, name: "Refrigerante Lata", description: "Coca-Cola, Guaraná ou Sprite 350ml", price: 6.90, category: "bebidas", emoji: "🥤" },
+      { id: 22, name: "Suco Natural", description: "Laranja, limão ou maracujá 300ml", price: 9.90, category: "bebidas", emoji: "🥤" },
+      { id: 23, name: "Água Mineral", description: "Com ou sem gás 500ml", price: 4.90, category: "bebidas", emoji: "🥤" },
+      { id: 24, name: "Chá Gelado", description: "Chá verde ou preto 500ml", price: 8.90, category: "bebidas", emoji: "🥤" },
+    ];
 
-<a href="#" id="btn-carrinho" class="carrinho-fixo" onclick="finalizar()">
-    🛒 Ver Carrinho: R$ <span id="total">0.00</span>
-</a>
+    // Cart state
+    let cart = [];
+    let currentCategory = 'all';
+    
+    // Default config
+    const defaultConfig = {
+      restaurant_name: "🍄 Shimeji Sushi Delivery",
+      restaurant_slogan: "Sabor autêntico do Japão entregue na sua casa",
+      whatsapp_number: "11999999999",
+      delivery_info: "Entrega: 40-60 min • Grátis acima de R$80",
+      background_color: "#1a1a2e",
+      surface_color: "#ffffff1a",
+      text_color: "#ffffff",
+      primary_color: "#dc2626",
+      secondary_color: "#22c55e"
+    };
 
-<script>
-    let carrinho = [];
-    let total = 0;
-
-    function add(nome, preco) {
-        carrinho.push(nome);
-        total += preco;
-        document.getElementById('total').innerText = total.toFixed(2);
-        document.getElementById('btn-carrinho').style.display = 'block';
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          document.getElementById('restaurant-name').textContent = config.restaurant_name || defaultConfig.restaurant_name;
+          document.getElementById('restaurant-slogan').textContent = config.restaurant_slogan || defaultConfig.restaurant_slogan;
+          document.getElementById('delivery-info').querySelector('span').textContent = config.delivery_info || defaultConfig.delivery_info;
+          
+          // Apply colors
+          const primaryColor = config.primary_color || defaultConfig.primary_color;
+          const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+          const textColor = config.text_color || defaultConfig.text_color;
+          const bgColor = config.background_color || defaultConfig.background_color;
+          const surfaceColor = config.surface_color || defaultConfig.surface_color;
+          
+          document.documentElement.style.setProperty('--primary-color', primaryColor);
+          
+          // Update category buttons
+          document.querySelectorAll('.category-btn.active').forEach(btn => {
+            btn.style.background = primaryColor;
+          });
+          
+          // Update checkout buttons
+          document.querySelectorAll('[id^="checkout-btn"]').forEach(btn => {
+            btn.style.background = `linear-gradient(to right, ${secondaryColor}, ${secondaryColor})`;
+          });
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => { config.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => { config.surface_color = value; window.elementSdk.setConfig({ surface_color: value }); }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => { config.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+            },
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => { config.primary_color = value; window.elementSdk.setConfig({ primary_color: value }); }
+            },
+            {
+              get: () => config.secondary_color || defaultConfig.secondary_color,
+              set: (value) => { config.secondary_color = value; window.elementSdk.setConfig({ secondary_color: value }); }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["restaurant_name", config.restaurant_name || defaultConfig.restaurant_name],
+          ["restaurant_slogan", config.restaurant_slogan || defaultConfig.restaurant_slogan],
+          ["whatsapp_number", config.whatsapp_number || defaultConfig.whatsapp_number],
+          ["delivery_info", config.delivery_info || defaultConfig.delivery_info]
+        ])
+      });
     }
 
-    function finalizar() {
-        const tel = "553499365141"; // <-- COLOQUE SEU NUMERO AQUI
-        let msg = "🍣 *Novo Pedido - ShimejiSushi*%0A%0A";
-        carrinho.forEach(item => msg += "- " + item + "%0A");
-        msg += "%0A*Total:* R$ " + total.toFixed(2);
-        msg += "%0A%0APagamento via PIX enviado em anexo.";
-        window.open(`https://wa.me/${tel}?text=${msg}`);
+    // Render menu items
+    function renderMenu() {
+      const grid = document.getElementById('menu-grid');
+      const filteredItems = currentCategory === 'all' 
+        ? menuItems 
+        : menuItems.filter(item => item.category === currentCategory);
+      
+      grid.innerHTML = filteredItems.map(item => `
+        <div class="menu-item bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-red-500/50 transition-all hover:transform hover:scale-[1.02] group">
+          <div class="relative h-32 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+            <span class="text-6xl group-hover:scale-110 transition-transform">${item.emoji}</span>
+            ${item.popular ? `
+              <span class="absolute top-2 right-2 bg-yellow-400 text-gray-900 text-xs font-bold px-2 py-1 rounded-full">
+                ⭐ Popular
+              </span>
+            ` : ''}
+          </div>
+          <div class="p-4">
+            <h3 class="text-white font-semibold text-lg mb-1">${item.name}</h3>
+            <p class="text-gray-400 text-sm mb-3 line-clamp-2">${item.description}</p>
+            <div class="flex items-center justify-between">
+              <span class="text-red-400 font-bold text-xl">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
+              <button onclick="addToCart(${item.id})" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl font-medium transition-all transform hover:scale-105 flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                Adicionar
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
     }
-</script>
 
-</body>
+    // Filter by category
+    function filterCategory(category) {
+      currentCategory = category;
+      
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.classList.remove('active');
+        btn.style.background = '';
+      });
+      
+      const activeBtn = document.querySelector(`[data-category="${category}"]`);
+      activeBtn.classList.add('active');
+      activeBtn.style.background = getComputedStyle(document.documentElement).getPropertyValue('--primary-color') || '#dc2626';
+      
+      renderMenu();
+    }
+
+    // Add to cart
+    function addToCart(itemId) {
+      const item = menuItems.find(i => i.id === itemId);
+      const existingItem = cart.find(i => i.id === itemId);
+      
+      if (existingItem) {
+        existingItem.quantity++;
+      } else {
+        cart.push({ ...item, quantity: 1 });
+      }
+      
+      updateCart();
+      showToast(`${item.name} adicionado!`);
+    }
+
+    // Remove from cart
+    function removeFromCart(itemId) {
+      const index = cart.findIndex(i => i.id === itemId);
+      if (index > -1) {
+        if (cart[index].quantity > 1) {
+          cart[index].quantity--;
+        } else {
+          cart.splice(index, 1);
+        }
+      }
+      updateCart();
+    }
+
+    // Update cart UI
+    function updateCart() {
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const deliveryFee = subtotal >= 80 ? 0 : 8;
+      const total = subtotal + deliveryFee;
+      
+      // Update badges
+      const badges = ['cart-badge-mobile', 'cart-count-desktop', 'floating-cart-badge'];
+      badges.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.textContent = totalItems;
+          if (id === 'cart-badge-mobile') {
+            el.classList.toggle('hidden', totalItems === 0);
+          }
+        }
+      });
+      
+      // Show/hide floating cart button
+      const floatingCart = document.getElementById('floating-cart');
+      floatingCart.classList.toggle('hidden', totalItems === 0);
+      
+      // Update cart items for both mobile and desktop
+      ['cart-items-desktop', 'cart-items-mobile'].forEach(containerId => {
+        const container = document.getElementById(containerId);
+        if (cart.length === 0) {
+          container.innerHTML = '<p class="text-gray-400 text-sm text-center py-4">Carrinho vazio</p>';
+        } else {
+          container.innerHTML = cart.map(item => `
+            <div class="flex items-center gap-3 bg-white/5 rounded-xl p-3">
+              <span class="text-2xl">${item.emoji}</span>
+              <div class="flex-1 min-w-0">
+                <p class="text-white text-sm font-medium truncate">${item.name}</p>
+                <p class="text-red-400 text-sm">R$ ${item.price.toFixed(2).replace('.', ',')}</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="removeFromCart(${item.id})" class="w-7 h-7 rounded-full bg-white/10 text-white hover:bg-red-600 transition-colors flex items-center justify-center">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+                  </svg>
+                </button>
+                <span class="text-white font-medium w-6 text-center">${item.quantity}</span>
+                <button onclick="addToCart(${item.id})" class="w-7 h-7 rounded-full bg-white/10 text-white hover:bg-green-600 transition-colors flex items-center justify-center">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          `).join('');
+        }
+      });
+      
+      // Update totals
+      ['desktop', 'mobile'].forEach(suffix => {
+        document.getElementById(`cart-subtotal-${suffix}`).textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+        const feeEl = document.getElementById(`delivery-fee-${suffix}`);
+        feeEl.textContent = deliveryFee === 0 ? 'Grátis' : `R$ ${deliveryFee.toFixed(2).replace('.', ',')}`;
+        feeEl.className = deliveryFee === 0 ? 'text-green-400' : 'text-white';
+        document.getElementById(`cart-total-${suffix}`).textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        
+        const checkoutBtn = document.getElementById(`checkout-btn-${suffix}`);
+        checkoutBtn.disabled = cart.length === 0;
+      });
+    }
+
+    // Toggle cart modal
+    function toggleCart() {
+      const modal = document.getElementById('cart-modal');
+      modal.classList.toggle('hidden');
+      document.body.style.overflow = modal.classList.contains('hidden') ? '' : 'hidden';
+    }
+
+    // Show toast notification
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      toastMessage.textContent = message;
+      
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 2000);
+    }
+
+    // Checkout via WhatsApp
+    function checkout() {
+      if (cart.length === 0) return;
+      
+      const config = window.elementSdk?.config || defaultConfig;
+      const whatsappNumber = config.whatsapp_number || defaultConfig.whatsapp_number;
+      
+      // Get address and payment from both mobile and desktop
+      const address = document.getElementById('address-desktop')?.value || document.getElementById('address-mobile')?.value || '';
+      const payment = document.getElementById('payment-desktop')?.value || document.getElementById('payment-mobile')?.value || '';
+      
+      if (!address.trim()) {
+        showToast('Por favor, informe o endereço!');
+        return;
+      }
+      
+      if (!payment) {
+        showToast('Por favor, selecione a forma de pagamento!');
+        return;
+      }
+      
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const deliveryFee = subtotal >= 80 ? 0 : 8;
+      const total = subtotal + deliveryFee;
+      
+      let message = `🍣 *Novo Pedido - ${config.restaurant_name || defaultConfig.restaurant_name}*\n\n`;
+      message += `📋 *Itens do Pedido:*\n`;
+      
+      cart.forEach(item => {
+        message += `• ${item.quantity}x ${item.name} - R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}\n`;
+      });
+      
+      message += `\n💰 *Subtotal:* R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+      message += `\n🚚 *Taxa de entrega:* ${deliveryFee === 0 ? 'Grátis' : 'R$ ' + deliveryFee.toFixed(2).replace('.', ',')}`;
+      message += `\n\n✅ *Total:* R$ ${total.toFixed(2).replace('.', ',')}`;
+      message += `\n\n📍 *Endereço:* ${address}`;
+      
+      const paymentEmoji = {
+        dinheiro: '💵',
+        cartao: '💳',
+        debito: '🏧',
+        pix: '📱'
+      };
+      const paymentLabel = {
+        dinheiro: 'Dinheiro',
+        cartao: 'Cartão de Crédito',
+        debito: 'Cartão de Débito',
+        pix: 'PIX'
+      };
+      
+      message += `\n💳 *Forma de pagamento:* ${paymentEmoji[payment]} ${paymentLabel[payment]}`;
+      
+      const encodedMessage = encodeURIComponent(message);
+      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+      
+      window.open(whatsappUrl, '_blank');
+    }
+
+    // Initialize
+    document.documentElement.style.setProperty('--primary-color', '#dc2626');
+    renderMenu();
+    updateCart();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d6bc1aa00308860',t:'MTc3MjU3MzU3NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
