@@ -58,73 +58,61 @@
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
  <body class="h-full font-body">
-  <div id="app" class="h-full overflow-auto" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);">
-   <!-- Header -->
+  <div id="app" class="h-full overflow-auto" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);"><!-- Header -->
    <header class="relative overflow-hidden" style="background: linear-gradient(to right, #b91c1c, #dc2626, #b91c1c);">
     <div class="absolute inset-0 opacity-20">
-     <svg class="w-full h-full" viewbox="0 0 100 100" preserveaspectratio="none">
-      <circle cx="10" cy="20" r="2" fill="white" /> <circle cx="30" cy="60" r="1.5" fill="white" /> <circle cx="70" cy="30" r="2" fill="white" /> <circle cx="90" cy="70" r="1" fill="white" /> <circle cx="50" cy="80" r="1.5" fill="white" />
+     <svg class="w-full h-full" viewbox="0 0 100 100" preserveaspectratio="none"><circle cx="10" cy="20" r="2" fill="white" /> <circle cx="30" cy="60" r="1.5" fill="white" /> <circle cx="70" cy="30" r="2" fill="white" /> <circle cx="90" cy="70" r="1" fill="white" /> <circle cx="50" cy="80" r="1.5" fill="white" />
      </svg>
     </div>
     <div class="relative px-4 py-6 md:py-8">
      <div class="max-w-4xl mx-auto text-center">
       <div class="flex items-center justify-center gap-3 mb-2">
-       <svg class="w-10 h-10 md:w-12 md:h-12 text-white" viewbox="0 0 64 64" fill="currentColor">
-        <ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="currentColor" stroke-width="2" /> <ellipse cx="32" cy="32" rx="20" ry="8" /> <circle cx="24" cy="32" r="3" fill="#dc2626" /> <circle cx="32" cy="30" r="2.5" fill="#f97316" /> <circle cx="40" cy="32" r="3" fill="#dc2626" /> <rect x="16" y="44" width="4" height="12" rx="2" fill="currentColor" /> <rect x="44" y="44" width="4" height="12" rx="2" fill="currentColor" />
+       <svg class="w-10 h-10 md:w-12 md:h-12 text-white" viewbox="0 0 64 64" fill="currentColor"><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="currentColor" stroke-width="2" /> <ellipse cx="32" cy="32" rx="20" ry="8" /> <circle cx="24" cy="32" r="3" fill="#dc2626" /> <circle cx="32" cy="30" r="2.5" fill="#f97316" /> <circle cx="40" cy="32" r="3" fill="#dc2626" /> <rect x="16" y="44" width="4" height="12" rx="2" fill="currentColor" /> <rect x="44" y="44" width="4" height="12" rx="2" fill="currentColor" />
        </svg>
        <h1 id="restaurant-name" class="font-display text-3xl md:text-4xl font-bold text-white tracking-wide">🍄 Shimeji Sushi Delivery</h1>
       </div>
       <p id="restaurant-slogan" class="text-red-100 text-sm md:text-base font-light tracking-widest">Sabor autêntico do Japão entregue na sua casa</p>
       <div id="delivery-info" class="mt-3 inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-white text-sm">
-       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
        </svg><span>Entrega: 40-60 min • Grátis acima de R$80</span>
       </div>
      </div>
     </div><!-- Cart Button Mobile --> <button id="cart-btn-mobile" onclick="toggleCart()" class="md:hidden absolute top-4 right-4 bg-white/20 backdrop-blur-sm p-2.5 rounded-full text-white hover:bg-white/30 transition-all">
-     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
      </svg><span id="cart-badge-mobile" class="cart-badge absolute -top-1 -right-1 bg-yellow-400 text-gray-900 text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center hidden">0</span> </button>
    </header><!-- Main Content -->
-   <main class="max-w-6xl mx-auto px-4 py-6">
-    <!-- Category Filter -->
-    <div class="flex gap-2 overflow-x-auto pb-4 scrollbar-hide mb-6">
-     <button onclick="filterCategory('all')" class="category-btn active flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="all"> 🍱 Todos </button> <button onclick="filterCategory('combos')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="combos"> 🎁 Combos </button> <button onclick="filterCategory('sushis')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="sushis"> 🍣 Sushis </button> <button onclick="filterCategory('sashimis')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="sashimis"> 🐟 Sashimis </button> <button onclick="filterCategory('temakis')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="temakis"> 🌯 Temakis </button> <button onclick="filterCategory('hot')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="hot"> 🔥 Hot Rolls </button> <button onclick="filterCategory('bebidas')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="bebidas"> 🥤 Bebidas </button>
+   <main class="max-w-6xl mx-auto px-4 py-6"><!-- Category Filter -->
+    <div class="flex gap-2 overflow-x-auto pb-4 scrollbar-hide mb-6"><button onclick="filterCategory('all')" class="category-btn active flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="all"> 🍱 Todos </button> <button onclick="filterCategory('combos')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="combos"> 🎁 Combos </button> <button onclick="filterCategory('sushis')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="sushis"> 🍣 Sushis </button> <button onclick="filterCategory('sashimis')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="sashimis"> 🐟 Sashimis </button> <button onclick="filterCategory('temakis')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="temakis"> 🌯 Temakis </button> <button onclick="filterCategory('hot')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="hot"> 🔥 Hot Rolls </button> <button onclick="filterCategory('bebidas')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="bebidas"> 🥤 Bebidas </button>
     </div>
-    <div class="flex gap-6">
-     <!-- Menu Grid -->
+    <div class="flex gap-6"><!-- Menu Grid -->
      <div class="flex-1">
-      <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-       <!-- Items will be rendered here -->
+      <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"><!-- Items will be rendered here -->
       </div>
      </div><!-- Cart Sidebar Desktop -->
      <aside id="cart-sidebar" class="hidden md:block w-80 flex-shrink-0">
       <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 sticky top-4 border border-white/10">
        <div class="flex items-center gap-2 mb-4">
-        <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+        <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
         </svg>
         <h2 class="text-white font-semibold">Seu Pedido</h2><span id="cart-count-desktop" class="ml-auto bg-red-600 text-white text-xs px-2 py-0.5 rounded-full">0</span>
        </div>
        <div id="cart-items-desktop" class="space-y-3 max-h-64 overflow-y-auto mb-4">
         <p class="text-gray-400 text-sm text-center py-4">Carrinho vazio</p>
        </div>
-       <div class="border-t border-white/10 pt-4 mb-4"><label class="block text-white text-sm font-medium mb-2">📍 Endereço</label> <input id="address-desktop" type="text" placeholder="Rua, número, bairro..." class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all">
+       <div class="border-t border-white/10 pt-4 mb-4">
+        <label class="block text-white text-sm font-medium mb-2">📍 Endereço</label> <input id="address-desktop" type="text" placeholder="Rua, número, bairro..." class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all">
        </div>
-       <div class="border-b border-white/10 pb-4"><label class="block text-white text-sm font-medium mb-2">💳 Forma de Pagamento</label> <select id="payment-desktop" class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all"> <option value="" class="bg-gray-900">Selecione a forma de pagamento</option> <option value="dinheiro" class="bg-gray-900">💵 Dinheiro</option> <option value="cartao" class="bg-gray-900">💳 Cartão de Crédito</option> <option value="debito" class="bg-gray-900">🏧 Cartão de Débito</option> <option value="pix" class="bg-gray-900">📱 PIX</option> </select>
+       <div class="border-b border-white/10 pb-4">
+        <label class="block text-white text-sm font-medium mb-2">💳 Forma de Pagamento</label> <select id="payment-desktop" class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all"> <option value="" class="bg-gray-900">Selecione a forma de pagamento</option> <option value="dinheiro" class="bg-gray-900">💵 Dinheiro</option> <option value="cartao" class="bg-gray-900">💳 Cartão de Crédito</option> <option value="debito" class="bg-gray-900">🏧 Cartão de Débito</option> <option value="pix" class="bg-gray-900">📱 PIX</option> </select>
        </div>
        <div class="pt-4">
-        <div class="flex justify-between text-white mb-1">
-         <span class="text-gray-300">Subtotal:</span> <span id="cart-subtotal-desktop">R$ 0,00</span>
+        <div class="flex justify-between text-white mb-1"><span class="text-gray-300">Subtotal:</span> <span id="cart-subtotal-desktop">R$ 0,00</span>
         </div>
-        <div class="flex justify-between text-white mb-4">
-         <span class="text-gray-300">Taxa de entrega:</span> <span id="delivery-fee-desktop" class="text-green-400">Grátis</span>
+        <div class="flex justify-between text-white mb-4"><span class="text-gray-300">Taxa de entrega:</span> <span id="delivery-fee-desktop" class="text-green-400">Grátis</span>
         </div>
-        <div class="flex justify-between text-white font-bold text-lg mb-4">
-         <span>Total:</span> <span id="cart-total-desktop">R$ 0,00</span>
+        <div class="flex justify-between text-white font-bold text-lg mb-4"><span>Total:</span> <span id="cart-total-desktop">R$ 0,00</span>
         </div><button id="checkout-btn-desktop" onclick="checkout()" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none" disabled>
-         <svg class="w-5 h-5" viewbox="0 0 24 24" fill="currentColor">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+         <svg class="w-5 h-5" viewbox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
          </svg> Fazer Pedido </button>
        </div>
       </div>
@@ -136,48 +124,64 @@
     <div class="cart-panel absolute right-0 top-0 h-full w-full max-w-md bg-gradient-to-b from-gray-900 to-gray-950 p-6 overflow-y-auto">
      <div class="flex items-center justify-between mb-6">
       <div class="flex items-center gap-2">
-       <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+       <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
        </svg>
        <h2 class="text-xl font-bold text-white">Seu Pedido</h2>
       </div><button onclick="toggleCart()" class="text-gray-400 hover:text-white p-2">
-       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
        </svg></button>
      </div>
      <div id="cart-items-mobile" class="space-y-4 mb-6">
       <p class="text-gray-400 text-center py-8">Carrinho vazio</p>
      </div>
-     <div class="border-t border-white/10 pt-4 mb-4"><label class="block text-white text-sm font-medium mb-2">📍 Endereço</label> <input id="address-mobile" type="text" placeholder="Rua, número, bairro..." class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all">
+     <div class="border-t border-white/10 pt-4 mb-4">
+      <label class="block text-white text-sm font-medium mb-2">📍 Endereço</label> <input id="address-mobile" type="text" placeholder="Rua, número, bairro..." class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all">
      </div>
-     <div class="border-b border-white/10 pb-4"><label class="block text-white text-sm font-medium mb-2">💳 Forma de Pagamento</label> <select id="payment-mobile" class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all"> <option value="" class="bg-gray-900">Selecione a forma de pagamento</option> <option value="dinheiro" class="bg-gray-900">💵 Dinheiro</option> <option value="cartao" class="bg-gray-900">💳 Cartão de Crédito</option> <option value="debito" class="bg-gray-900">🏧 Cartão de Débito</option> <option value="pix" class="bg-gray-900">📱 PIX</option> </select>
+     <div class="border-b border-white/10 pb-4">
+      <label class="block text-white text-sm font-medium mb-2">💳 Forma de Pagamento</label> <select id="payment-mobile" class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all"> <option value="" class="bg-gray-900">Selecione a forma de pagamento</option> <option value="dinheiro" class="bg-gray-900">💵 Dinheiro</option> <option value="cartao" class="bg-gray-900">💳 Cartão de Crédito</option> <option value="debito" class="bg-gray-900">🏧 Cartão de Débito</option> <option value="pix" class="bg-gray-900">📱 PIX</option> </select>
      </div>
      <div class="pt-4 mt-auto">
-      <div class="flex justify-between text-white mb-2">
-       <span class="text-gray-300">Subtotal:</span> <span id="cart-subtotal-mobile">R$ 0,00</span>
+      <div class="flex justify-between text-white mb-2"><span class="text-gray-300">Subtotal:</span> <span id="cart-subtotal-mobile">R$ 0,00</span>
       </div>
-      <div class="flex justify-between text-white mb-4">
-       <span class="text-gray-300">Taxa de entrega:</span> <span id="delivery-fee-mobile" class="text-green-400">Grátis</span>
+      <div class="flex justify-between text-white mb-4"><span class="text-gray-300">Taxa de entrega:</span> <span id="delivery-fee-mobile" class="text-green-400">Grátis</span>
       </div>
-      <div class="flex justify-between text-white font-bold text-xl mb-6">
-       <span>Total:</span> <span id="cart-total-mobile">R$ 0,00</span>
+      <div class="flex justify-between text-white font-bold text-xl mb-6"><span>Total:</span> <span id="cart-total-mobile">R$ 0,00</span>
       </div><button id="checkout-btn-mobile" onclick="checkout()" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-4 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-       <svg class="w-6 h-6" viewbox="0 0 24 24" fill="currentColor">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+       <svg class="w-6 h-6" viewbox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
        </svg> Fazer Pedido no WhatsApp </button>
      </div>
     </div>
    </div><!-- Toast Notification -->
    <div id="toast" class="fixed bottom-20 md:bottom-6 left-1/2 -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-2 transition-all transform translate-y-20 opacity-0 z-50">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
     </svg><span id="toast-message">Item adicionado!</span>
    </div><!-- Floating Cart Button Mobile --> <button id="floating-cart" onclick="toggleCart()" class="md:hidden fixed bottom-6 right-6 bg-gradient-to-r from-red-500 to-red-600 text-white p-4 rounded-full shadow-2xl z-40 transition-all transform hover:scale-110 hidden">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
     </svg><span id="floating-cart-badge" class="absolute -top-1 -right-1 bg-yellow-400 text-gray-900 text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">0</span> </button>
   </div>
   <script>
+    // Initialize Data SDK
+    let allOrders = [];
+    let isAdmin = false;
+    let isInitialized = false;
+
+    const dataHandler = {
+      onDataChanged(data) {
+        allOrders = data;
+        if (isAdmin) {
+          renderDashboard();
+        }
+      }
+    };
+
+    // Initialize SDK on page load
+    (async () => {
+      const initResult = await window.dataSdk.init(dataHandler);
+      if (initResult.isOk) {
+        isInitialized = true;
+      }
+    })();
+
     // Menu data
     const menuItems = [
       // Combos
@@ -227,6 +231,7 @@
       restaurant_slogan: "Sabor autêntico do Japão entregue na sua casa",
       whatsapp_number: "553499365141",
       delivery_info: "Entrega: 40-60 min • Grátis acima de R$80",
+      admin_password: "todopoderoso",
       background_color: "#1a1a2e",
       surface_color: "#ffffff1a",
       text_color: "#ffffff",
@@ -293,7 +298,8 @@
           ["restaurant_name", config.restaurant_name || defaultConfig.restaurant_name],
           ["restaurant_slogan", config.restaurant_slogan || defaultConfig.restaurant_slogan],
           ["whatsapp_number", config.whatsapp_number || defaultConfig.whatsapp_number],
-          ["delivery_info", config.delivery_info || defaultConfig.delivery_info]
+          ["delivery_info", config.delivery_info || defaultConfig.delivery_info],
+          ["admin_password", config.admin_password || defaultConfig.admin_password]
         ])
       });
     }
@@ -522,13 +528,301 @@
       const encodedMessage = encodeURIComponent(message);
       const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
       
+      // Save order to database
+      saveOrder(address, payment, subtotal, deliveryFee, total);
+      
+      // Open WhatsApp
       window.open(whatsappUrl, '_blank');
     }
 
-    // Initialize
-    document.documentElement.style.setProperty('--primary-color', '#dc2626');
-    renderMenu();
-    updateCart();
+    // Save order to database
+    async function saveOrder(address, payment, subtotal, deliveryFee, total) {
+      if (!isInitialized) return;
+      
+      const itemsText = cart.map(item => `${item.quantity}x ${item.name}`).join(', ');
+      
+      const result = await window.dataSdk.create({
+        customer_name: "Cliente",
+        customer_phone: "",
+        address: address,
+        items: itemsText,
+        subtotal: subtotal,
+        delivery_fee: deliveryFee,
+        total: total,
+        payment_method: payment,
+        status: "pendente",
+        created_at: new Date().toISOString()
+      });
+      
+      if (result.isOk) {
+        // Clear cart after successful save
+        cart = [];
+        updateCart();
+        
+        // Clear form fields
+        document.getElementById('address-desktop').value = '';
+        document.getElementById('address-mobile').value = '';
+        document.getElementById('payment-desktop').value = '';
+        document.getElementById('payment-mobile').value = '';
+        
+        toggleCart();
+      }
+    }
+
+    // Admin Dashboard Functions
+    function showAdminLogin() {
+      const loginHtml = `
+        <div class="fixed inset-0 z-50 flex items-center justify-center">
+          <div class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+          <div class="bg-gradient-to-br from-gray-900 to-gray-950 p-8 rounded-2xl border border-white/10 shadow-2xl z-10 max-w-sm w-full mx-4">
+            <h2 class="text-2xl font-bold text-white mb-6 text-center">🔐 Painel do Administrador</h2>
+            <div class="mb-4">
+              <label class="block text-white text-sm font-medium mb-2">Usuário</label>
+              <input id="admin-username" type="text" placeholder="shimejisushi" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500" />
+            </div>
+            <div class="mb-6">
+              <label class="block text-white text-sm font-medium mb-2">Senha</label>
+              <input id="admin-password" type="password" placeholder="••••••••" class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500" />
+            </div>
+            <button onclick="loginAdmin()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition-all mb-3">
+              Entrar
+            </button>
+            <button onclick="closeAdminLogin()" class="w-full bg-gray-700 hover:bg-gray-800 text-white py-2 rounded-lg font-semibold transition-all">
+              Cancelar
+            </button>
+          </div>
+        </div>
+      `;
+      
+      const loginModal = document.createElement('div');
+      loginModal.id = 'admin-login-modal';
+      loginModal.innerHTML = loginHtml;
+      document.body.appendChild(loginModal);
+      document.body.style.overflow = 'hidden';
+    }
+
+    function loginAdmin() {
+      const username = document.getElementById('admin-username').value;
+      const password = document.getElementById('admin-password').value;
+      const config = window.elementSdk?.config || defaultConfig;
+      const correctPassword = config.admin_password || defaultConfig.admin_password;
+      
+      if (username === 'shimejisushi' && password === correctPassword) {
+        isAdmin = true;
+        closeAdminLogin();
+        showDashboard();
+      } else {
+        showToast('❌ Usuário ou senha incorretos!');
+      }
+    }
+
+    function closeAdminLogin() {
+      const modal = document.getElementById('admin-login-modal');
+      if (modal) {
+        modal.remove();
+        document.body.style.overflow = '';
+      }
+    }
+
+    function showDashboard() {
+      const app = document.getElementById('app');
+      app.innerHTML = `
+        <div class="h-full overflow-auto" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);">
+          <header class="bg-gradient-to-r from-blue-600 to-blue-800 p-6 sticky top-0 z-10 border-b border-blue-500/30">
+            <div class="max-w-6xl mx-auto flex items-center justify-between">
+              <div>
+                <h1 class="text-3xl font-bold text-white">📊 Dashboard de Vendas</h1>
+                <p class="text-blue-100 text-sm mt-1">Gerenciamento de Pedidos</p>
+              </div>
+              <button onclick="logoutAdmin()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-all">
+                Sair
+              </button>
+            </div>
+          </header>
+          
+          <main class="max-w-6xl mx-auto p-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+              <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10">
+                <p class="text-gray-400 text-sm">Total de Pedidos</p>
+                <p class="text-3xl font-bold text-white mt-2" id="total-orders">0</p>
+              </div>
+              <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10">
+                <p class="text-gray-400 text-sm">Pedidos Pendentes</p>
+                <p class="text-3xl font-bold text-yellow-400 mt-2" id="pending-orders">0</p>
+              </div>
+              <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10">
+                <p class="text-gray-400 text-sm">Pedidos Confirmados</p>
+                <p class="text-3xl font-bold text-green-400 mt-2" id="confirmed-orders">0</p>
+              </div>
+              <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/10">
+                <p class="text-gray-400 text-sm">Receita Total</p>
+                <p class="text-3xl font-bold text-blue-400 mt-2" id="total-revenue">R$ 0</p>
+              </div>
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-md rounded-xl border border-white/10 overflow-hidden">
+              <div class="p-6 border-b border-white/10 flex items-center justify-between">
+                <h2 class="text-xl font-bold text-white">📋 Pedidos Recentes</h2>
+                <div class="flex gap-2">
+                  <button onclick="filterDashboardStatus('todos')" class="dashboard-filter-btn active px-3 py-1 rounded-lg text-sm font-medium transition-all bg-blue-600 text-white">
+                    Todos
+                  </button>
+                  <button onclick="filterDashboardStatus('pendente')" class="dashboard-filter-btn px-3 py-1 rounded-lg text-sm font-medium transition-all bg-white/10 text-white hover:bg-yellow-600">
+                    Pendentes
+                  </button>
+                  <button onclick="filterDashboardStatus('confirmado')" class="dashboard-filter-btn px-3 py-1 rounded-lg text-sm font-medium transition-all bg-white/10 text-white hover:bg-green-600">
+                    Confirmados
+                  </button>
+                </div>
+              </div>
+              <div id="dashboard-orders" class="overflow-x-auto">
+                <table class="w-full">
+                  <thead class="bg-white/5 border-b border-white/10">
+                    <tr>
+                      <th class="px-6 py-3 text-left text-sm font-semibold text-gray-300">ID</th>
+                      <th class="px-6 py-3 text-left text-sm font-semibold text-gray-300">Data</th>
+                      <th class="px-6 py-3 text-left text-sm font-semibold text-gray-300">Endereço</th>
+                      <th class="px-6 py-3 text-left text-sm font-semibold text-gray-300">Itens</th>
+                      <th class="px-6 py-3 text-left text-sm font-semibold text-gray-300">Total</th>
+                      <th class="px-6 py-3 text-left text-sm font-semibold text-gray-300">Pagamento</th>
+                      <th class="px-6 py-3 text-left text-sm font-semibold text-gray-300">Status</th>
+                      <th class="px-6 py-3 text-left text-sm font-semibold text-gray-300">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="orders-table-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </main>
+        </div>
+      `;
+      
+      renderDashboard();
+    }
+
+    let dashboardFilterStatus = 'todos';
+
+    function filterDashboardStatus(status) {
+      dashboardFilterStatus = status;
+      document.querySelectorAll('.dashboard-filter-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-blue-600');
+        btn.classList.add('bg-white/10');
+      });
+      event.target.classList.add('active', 'bg-blue-600');
+      event.target.classList.remove('bg-white/10');
+      renderDashboard();
+    }
+
+    function renderDashboard() {
+      const totalOrders = allOrders.length;
+      const pendingOrders = allOrders.filter(o => o.status === 'pendente').length;
+      const confirmedOrders = allOrders.filter(o => o.status === 'confirmado').length;
+      const totalRevenue = allOrders.reduce((sum, o) => sum + o.total, 0);
+      
+      document.getElementById('total-orders').textContent = totalOrders;
+      document.getElementById('pending-orders').textContent = pendingOrders;
+      document.getElementById('confirmed-orders').textContent = confirmedOrders;
+      document.getElementById('total-revenue').textContent = `R$ ${totalRevenue.toFixed(2).replace('.', ',')}`;
+      
+      const filteredOrders = dashboardFilterStatus === 'todos' 
+        ? allOrders 
+        : allOrders.filter(o => o.status === dashboardFilterStatus);
+      
+      const tbody = document.getElementById('orders-table-body');
+      tbody.innerHTML = filteredOrders.length === 0 
+        ? '<tr><td colspan="8" class="px-6 py-8 text-center text-gray-400">Nenhum pedido encontrado</td></tr>'
+        : filteredOrders.map((order, index) => {
+          const date = new Date(order.created_at);
+          const formattedDate = date.toLocaleDateString('pt-BR') + ' ' + date.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'});
+          const statusColor = order.status === 'pendente' ? 'text-yellow-400' : 'text-green-400';
+          const statusBgColor = order.status === 'pendente' ? 'bg-yellow-600/30 border-yellow-600/50' : 'bg-green-600/30 border-green-600/50';
+          
+          return `
+            <tr class="border-b border-white/10 hover:bg-white/5 transition-all">
+              <td class="px-6 py-4 text-sm text-white font-mono">#${String(index + 1).padStart(4, '0')}</td>
+              <td class="px-6 py-4 text-sm text-gray-300">${formattedDate}</td>
+              <td class="px-6 py-4 text-sm text-gray-300 max-w-xs truncate">${order.address}</td>
+              <td class="px-6 py-4 text-sm text-gray-300 max-w-md truncate" title="${order.items}">${order.items}</td>
+              <td class="px-6 py-4 text-sm font-semibold text-white">R$ ${order.total.toFixed(2).replace('.', ',')}</td>
+              <td class="px-6 py-4 text-sm text-gray-300">
+                ${order.payment_method === 'dinheiro' ? '💵' : ''}
+                ${order.payment_method === 'cartao' ? '💳' : ''}
+                ${order.payment_method === 'debito' ? '🏧' : ''}
+                ${order.payment_method === 'pix' ? '📱' : ''}
+                ${order.payment_method.charAt(0).toUpperCase() + order.payment_method.slice(1)}
+              </td>
+              <td class="px-6 py-4 text-sm">
+                <span class="${statusColor} ${statusBgColor} px-3 py-1 rounded-full border text-xs font-medium capitalize">
+                  ${order.status}
+                </span>
+              </td>
+              <td class="px-6 py-4 text-sm space-x-2">
+                ${order.status === 'pendente' ? `
+                  <button onclick="confirmOrder('${order.__backendId}')" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs font-medium transition-all">
+                    ✓ Confirmar
+                  </button>
+                ` : ''}
+                <button onclick="deleteOrder('${order.__backendId}')" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs font-medium transition-all">
+                  🗑 Deletar
+                </button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+    }
+
+    function confirmOrder(orderId) {
+      const order = allOrders.find(o => o.__backendId === orderId);
+      if (order) {
+        order.status = 'confirmado';
+        window.dataSdk.update(order);
+      }
+    }
+
+    function deleteOrder(orderId) {
+      const order = allOrders.find(o => o.__backendId === orderId);
+      if (order) {
+        // Show inline confirmation
+        const btn = event.target;
+        const originalText = btn.textContent;
+        btn.textContent = '🗑 Confirmar?';
+        btn.classList.add('ring-2', 'ring-red-400');
+        
+        const confirmDelete = () => {
+          window.dataSdk.delete(order);
+          btn.removeEventListener('click', confirmDelete);
+          btn.textContent = originalText;
+          btn.classList.remove('ring-2', 'ring-red-400');
+        };
+        
+        btn.addEventListener('click', confirmDelete);
+        
+        // Reset after 3 seconds
+        setTimeout(() => {
+          btn.removeEventListener('click', confirmDelete);
+          btn.textContent = originalText;
+          btn.classList.remove('ring-2', 'ring-red-400');
+        }, 3000);
+      }
+    }
+
+    function logoutAdmin() {
+      isAdmin = false;
+      location.reload();
+    }
+
+    // Add admin button to header
+    function addAdminButton() {
+      const cartBtn = document.getElementById('cart-btn-mobile');
+      if (cartBtn && !document.getElementById('admin-btn')) {
+        const adminBtn = document.createElement('button');
+        adminBtn.id = 'admin-btn';
+        adminBtn.className = 'absolute top-4 left-4 md:hidden bg-blue-600/30 backdrop-blur-sm p-2.5 rounded-full text-white hover:bg-blue-600/50 transition-all';
+        adminBtn.innerHTML = '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>';
+        adminBtn.onclick = showAdminLogin;
+        cartBtn.parentElement.insertBefore(adminBtn, cartBtn);
+      }
+    }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d6c762aa1f58860',t:'MTc3MjU4MDk2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d6c8968450b8860',t:'MTc3MjU4MTc1Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
