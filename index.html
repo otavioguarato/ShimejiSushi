@@ -1,62 +1,97 @@
-<!DOCTYPE html>
+[17:22, 3/3/2026] Otavio: <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Cardápio Digital</title>
+    <title>ShimejiSushi - Pedido Online</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; color: #333; }
-        header { text-align: center; padding: 20px; background: #e67e22; color: white; border-radius: 10px; margin-bottom: 20px; }
-        .categoria { background: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        h2 { color: #e67e22; border-bottom: 2px solid #f4f4f4; padding-bottom: 5px; }
-        .item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed #ddd; }
-        .item:last-child { border-bottom: none; }
-        .nome-prato { font-weight: bold; font-size: 1.1em; }
-        .preco { color: #27ae60; font-weight: bold; }
-        .descricao { font-size: 0.9em; color: #777; display: block; }
-        footer { text-align: center; margin-top: 30px; font-size: 0.8em; color: #999; }
+        body { font-family: 'Segoe UI', sans-serif; background: #121212; color: white; margin: 0; padding-bottom: 80px; }
+        .header { background: #e74c3c; padding: 20px; text-align: center; border-radius: 0 0 20px 20px; }
+        .container { padding: 15px; }
+        .produto { background: #1e1e1e; padding: 15px; margin-bottom: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #333; }
+        .price { color: #f1c40f; font-weight: bold; }
+        button { background: #e74c3c; color: white; …
+[17:28, 3/3/2026] Otavio: <!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShimejiSushi - Delivery</title>
+    <style>
+        :root { --red: #e74c3c; --dark: #1a1a1a; --gray: #2d2d2d; --gold: #f1c40f; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--dark); color: white; margin: 0; padding-bottom: 100px; }
+        .header { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=500'); background-size: cover; padding: 40px 20px; text-align: center; border-bottom: 3px solid var(--red); }
+        .container { padding: 15px; max-width: 600px; margin: auto; }
+        .cat-title { color: var(--gold); border-left: 4px solid var(--red); padding-left: 10px; margin: 25px 0 15px; }
+        .item { background: var(--gray); padding: 15px; margin-bottom: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .old-price { text-decoration: line-through; color: #888; font-size: 0.9em; }
+        .new-price { color: var(--gold); font-weight: bold; display: block; font-size: 1.1em; }
+        .btn-add { background: var(--red); color: white; border: none; padding: 10px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-add:active { transform: scale(0.9); }
+        .cart-bar { position: fixed; bottom: 0; width: 100%; max-width: 600px; left: 50%; transform: translateX(-50%); background: #25d366; color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 1.2em; text-decoration: none; display: none; border-radius: 20px 20px 0 0; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Sabor & Arte</h1>
-        <p>Aberto de Terça a Domingo - 18h às 23h</p>
-    </header>
+<div class="header">
+    <h1 style="margin:0">🍣 ShimejiSushi</h1>
+    <p style="color: #ddd">O melhor delivery da região</p>
+</div>
 
-    <div class="categoria">
-        <h2>🍔 Hambúrgueres</h2>
-        <div class="item">
-            <div>
-                <span class="nome-prato">Classic Burger</span>
-                <span class="descricao">Pão brioche, blend 160g, queijo e maionese.</span>
-            </div>
-            <span class="preco">R$ 28,00</span>
-        </div>
-        <div class="item">
-            <div>
-                <span class="nome-prato">Bacon Deluxe</span>
-                <span class="descricao">Blend 160g, muito bacon crocante e cheddar.</span>
-            </div>
-            <span class="preco">R$ 34,00</span>
-        </div>
+<div class="container">
+    <h3 class="cat-title">Combinados em Promoção</h3>
+    
+    <div class="item">
+        <div><strong>Combo 30 Peças</strong><br><span class="old-price">R$ 69,90</span><span class="new-price">R$ 49,90</span></div>
+        <button class="btn-add" onclick="add('Combo 30 Peças', 49.90)">+ Adicionar</button>
     </div>
 
-    <div class="categoria">
-        <h2>🥤 Bebidas</h2>
-        <div class="item">
-            <div><span class="nome-prato">Refrigerante Lata</span></div>
-            <span class="preco">R$ 6,00</span>
-        </div>
-        <div class="item">
-            <div><span class="nome-prato">Suco Natural (Laranja)</span></div>
-            <span class="preco">R$ 10,00</span>
-        </div>
+    <div class="item">
+        <div><strong>Combo 50 Peças</strong><br><span class="old-price">R$ 89,90</span><span class="new-price">R$ 69,90</span></div>
+        <button class="btn-add" onclick="add('Combo 50 Peças', 69.90)">+ Adicionar</button>
     </div>
 
-    <footer>
-        <p>Feito com ❤️ via GitHub Pages</p>
-    </footer>
+    <div class="item">
+        <div><strong>Combo 70 Peças</strong><br><span class="new-price">R$ 99,90</span></div>
+        <button class="btn-add" onclick="add('Combo 70 Peças', 99.90)">+ Adicionar</button>
+    </div>
+
+    <h3 class="cat-title">Categoria Hot-Roll</h3>
+
+    <div class="item">
+        <div><strong>Hot-Roll (20 unidades)</strong><br><span class="new-price">R$ 39,90</span></div>
+        <button class="btn-add" onclick="add('Hot-Roll 20un', 39.90)">+ Adicionar</button>
+    </div>
+
+    <div class="item">
+        <div><strong>Hot-Roll (30 unidades)</strong><br><small style="color:var(--gold)">Promoção Terça: R$ 1,50/un</small><br><span class="old-price">R$ 59,90</span><span class="new-price">R$ 45,00</span></div>
+        <button class="btn-add" onclick="add('Hot-Roll 30un', 45.00)">+ Adicionar</button>
+    </div>
+</div>
+
+<a href="#" id="cart-fixed" class="cart-bar" onclick="sendWhatsApp()">
+    🛒 Finalizar Pedido: R$ <span id="total-val">0.00</span>
+</a>
+
+<script>
+    let cart = [];
+    let total = 0;
+
+    function add(name, price) {
+        cart.push(name);
+        total += price;
+        document.getElementById('total-val').innerText = total.toFixed(2);
+        document.getElementById('cart-fixed').style.display = 'block';
+    }
+
+    function sendWhatsApp() {
+        const phone = "5511999999999"; // COLOQUE SEU NUMERO AQUI
+        let text = "🍣 Novo Pedido - ShimejiSushi%0A%0A";
+        cart.forEach(i => text += "• " + i + "%0A");
+        text += "%0A*Total:* R$ " + total.toFixed(2);
+        window.open(https://wa.me/${phone}?text=${text});
+    }
+</script>
 
 </body>
 </html>
