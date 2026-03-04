@@ -1,46 +1,83 @@
-<script>
-    // 1. ESTADO GLOBAL (Unificado)
-    let cart = [];
-    let allOrders = []; // Onde os pedidos do admin ficam
-    let currentCategory = 'all';
-    let isInitialized = false;
+<!doctype html>
+<html lang="pt-BR" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shimeji Sushi Delivery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans JP', sans-serif; background: #1a1a2e; color: white; }
+        .font-display { font-family: 'Playfair Display', serif; }
+        .category-btn.active { background: #dc2626 ! softened; border-color: #dc2626; }
+        .menu-item { transition: all 0.3s ease; }
+        .menu-item:hover { transform: translateY(-5px); border-color: #dc2626; }
+    </style>
+</head>
+<body class="h-full">
 
-    // 2. CONFIGURAÇÃO PADRÃO
-    const defaultConfig = {
-      restaurant_name: "🍄 Shimeji Sushi Delivery",
-      admin_password: "todopoderoso",
-      whatsapp_number: "553499365141"
-    };
+    <header class="bg-red-700 py-8 px-4 text-center relative">
+        <div onclick="openAdmin()" class="absolute top-0 left-0 w-20 h-20 cursor-default"></div>
+        <h1 id="restaurant-name" class="font-display text-3xl md:text-5xl mb-2">🍄 Shimeji Sushi Delivery</h1>
+        <p class="text-red-100 text-sm tracking-widest">Sabor autêntico do Japão em sua casa</p>
+    </header>
 
-    // 3. INICIALIZAÇÃO SEGURA DO DATA SDK
-    const dataHandler = {
-      onDataChanged: (data) => {
-        console.log("🔄 Dados Recebidos:", data);
-        allOrders = Array.isArray(data) ? data : [];
-        if (document.getElementById('admin-view')) renderAdminList();
-      }
-    };
+    <main class="max-w-6xl mx-auto p-4 flex flex-col md:flex-row gap-6">
+        
+        <div class="flex-1">
+            <div class="flex gap-2 overflow-x-auto pb-4 mb-6" id="category-filters">
+                <button onclick="filterCategory('all')" data-category="all" class="category-btn active flex-shrink-0 px-4 py-2 rounded-full bg-white/10 text-sm">🍱 Todos</button>
+                <button onclick="filterCategory('combos')" data-category="combos" class="category-btn flex-shrink-0 px-4 py-2 rounded-full bg-white/10 text-sm">🎁 Combos</button>
+                <button onclick="filterCategory('sushis')" data-category="sushis" class="category-btn flex-shrink-0 px-4 py-2 rounded-full bg-white/10 text-sm">🍣 Sushis</button>
+            </div>
+            
+            <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                </div>
+        </div>
 
-    (async () => {
-      try {
-        if (window.dataSdk) {
-          const result = await window.dataSdk.init(dataHandler);
-          if (result && result.isOk) isInitialized = true;
-        }
-      } catch (e) { console.error("Erro SDK:", e); }
-    })();
+        <aside class="hidden md:block w-80 bg-white/5 p-6 rounded-2xl border border-white/10 h-fit sticky top-4">
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2">🛒 Seu Pedido</h2>
+            <div id="cart-items-desktop" class="space-y-3 mb-4"></div>
+            <div class="border-t border-white/10 pt-4 space-y-3">
+                <input id="address-desktop" type="text" placeholder="Seu endereço completo" class="w-full bg-white/10 p-2 rounded text-sm outline-none border border-white/10 focus:border-red-500">
+                <select id="payment-desktop" class="w-full bg-white/10 p-2 rounded text-sm outline-none border border-white/10">
+                    <option value="" class="bg-slate-900">Forma de Pagamento</option>
+                    <option value="Pix" class="bg-slate-900 text-white">📱 Pix</option>
+                    <option value="Cartão" class="bg-slate-900 text-white">💳 Cartão</option>
+                    <option value="Dinheiro" class="bg-slate-900 text-white">💵 Dinheiro</option>
+                </select>
+                <div class="flex justify-between font-bold text-lg pt-2">
+                    <span>Total:</span> <span id="cart-total-desktop">R$ 0,00</span>
+                </div>
+                <button id="checkout-btn-desktop" onclick="checkout()" disabled class="w-full bg-green-600 hover:bg-green-700 py-3 rounded-xl font-bold disabled:opacity-50 transition-all">Finalizar Pedido</button>
+            </div>
+        </aside>
+    </main>
 
-    // 4. FUNÇÕES DO CARDÁPIO (Renderização)
-    function renderMenu() {
-      const grid = document.getElementById('menu-grid');
-      if (!grid) return;
-      const filtered = currentCategory === 'all' ? menuItems : menuItems.filter(i => i.category === currentCategory);
-      
-      grid.innerHTML = filtered.map(item => `
-        <div class="menu-item bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
-          <div class="text-4xl mb-2">${item.emoji}</div>
-          <h3 class="text-white font-semibold text-sm md:text-base">${item.name}</h3>
-          <p class="text-gray-400 text-xs mb-3 line-clamp-2">${item.description}</p>
-          <div class="flex items-center justify-between">
-            <span class="text-red-400 font-bold text-sm">R$ ${item.price.toFixed(2)}</span>
-            <button onclick="addToCart(${item.id})" class="bg-red-600 text-white px-3 py-1 rounded-lg text-xs font-bold hover:bg-red-500 transition-colors">ADD
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-green-600 px-6 py-3 rounded-full opacity-0 transition-all pointer-events-none z-50">
+        Item adicionado!
+    </div>
+
+    <script>
+        // DADOS DO MENU
+        const menuItems = [
+            { id: 1, name: "Combo Philadelphia Gold", description: "21 peças: 10 hots, 10 uramakis, 1 temaki", price: 69.90, category: "combos", emoji: "🎁" },
+            { id: 2, name: "Combo Família", description: "70 peças variadas", price: 99.90, category: "combos", emoji: "🍱" },
+            { id: 3, name: "Sushi Salmão", description: "2 unidades de sushi fresco", price: 12.90, category: "sushis", emoji: "🍣" }
+        ];
+
+        let cart = [];
+        let currentCategory = 'all';
+        let allOrders = [];
+
+        // RENDERIZAR
+        function renderMenu() {
+            const grid = document.getElementById('menu-grid');
+            const filtered = currentCategory === 'all' ? menuItems : menuItems.filter(i => i.category === currentCategory);
+            grid.innerHTML = filtered.map(item => `
+                <div class="menu-item bg-white/5 p-4 rounded-2xl border border-white/10">
+                    <div class="text-4xl mb-2">${item.emoji}</div>
+                    <h3 class="font-bold text-white">${item.name}</h3>
+                    <p class="text-gray-400 text-xs mb-4">${item.description}</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-red-400 font-bold">R$
