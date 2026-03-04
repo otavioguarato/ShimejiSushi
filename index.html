@@ -58,73 +58,61 @@
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
  <body class="h-full font-body">
-  <div id="app" class="h-full overflow-auto" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);">
-   <!-- Header -->
+  <div id="app" class="h-full overflow-auto" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);"><!-- Header -->
    <header class="relative overflow-hidden" style="background: linear-gradient(to right, #b91c1c, #dc2626, #b91c1c);">
     <div class="absolute inset-0 opacity-20">
-     <svg class="w-full h-full" viewbox="0 0 100 100" preserveaspectratio="none">
-      <circle cx="10" cy="20" r="2" fill="white" /> <circle cx="30" cy="60" r="1.5" fill="white" /> <circle cx="70" cy="30" r="2" fill="white" /> <circle cx="90" cy="70" r="1" fill="white" /> <circle cx="50" cy="80" r="1.5" fill="white" />
+     <svg class="w-full h-full" viewbox="0 0 100 100" preserveaspectratio="none"><circle cx="10" cy="20" r="2" fill="white" /> <circle cx="30" cy="60" r="1.5" fill="white" /> <circle cx="70" cy="30" r="2" fill="white" /> <circle cx="90" cy="70" r="1" fill="white" /> <circle cx="50" cy="80" r="1.5" fill="white" />
      </svg>
     </div>
     <div class="relative px-4 py-6 md:py-8">
      <div class="max-w-4xl mx-auto text-center">
       <div class="flex items-center justify-center gap-3 mb-2">
-       <svg class="w-10 h-10 md:w-12 md:h-12 text-white" viewbox="0 0 64 64" fill="currentColor">
-        <ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="currentColor" stroke-width="2" /> <ellipse cx="32" cy="32" rx="20" ry="8" /> <circle cx="24" cy="32" r="3" fill="#dc2626" /> <circle cx="32" cy="30" r="2.5" fill="#f97316" /> <circle cx="40" cy="32" r="3" fill="#dc2626" /> <rect x="16" y="44" width="4" height="12" rx="2" fill="currentColor" /> <rect x="44" y="44" width="4" height="12" rx="2" fill="currentColor" />
+       <svg class="w-10 h-10 md:w-12 md:h-12 text-white" viewbox="0 0 64 64" fill="currentColor"><ellipse cx="32" cy="32" rx="28" ry="12" fill="none" stroke="currentColor" stroke-width="2" /> <ellipse cx="32" cy="32" rx="20" ry="8" /> <circle cx="24" cy="32" r="3" fill="#dc2626" /> <circle cx="32" cy="30" r="2.5" fill="#f97316" /> <circle cx="40" cy="32" r="3" fill="#dc2626" /> <rect x="16" y="44" width="4" height="12" rx="2" fill="currentColor" /> <rect x="44" y="44" width="4" height="12" rx="2" fill="currentColor" />
        </svg>
        <h1 id="restaurant-name" class="font-display text-3xl md:text-4xl font-bold text-white tracking-wide">🍄 Shimeji Sushi Delivery</h1>
       </div>
       <p id="restaurant-slogan" class="text-red-100 text-sm md:text-base font-light tracking-widest">Sabor autêntico do Japão entregue na sua casa</p>
       <div id="delivery-info" class="mt-3 inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-white text-sm">
-       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
        </svg><span>Entrega: 40-60 min • Grátis acima de R$80</span>
       </div>
      </div>
     </div><!-- Cart Button Mobile --> <button id="cart-btn-mobile" onclick="toggleCart()" class="md:hidden absolute top-4 right-4 bg-white/20 backdrop-blur-sm p-2.5 rounded-full text-white hover:bg-white/30 transition-all">
-     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
      </svg><span id="cart-badge-mobile" class="cart-badge absolute -top-1 -right-1 bg-yellow-400 text-gray-900 text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center hidden">0</span> </button>
    </header><!-- Main Content -->
-   <main class="max-w-6xl mx-auto px-4 py-6">
-    <!-- Category Filter -->
-    <div class="flex gap-2 overflow-x-auto pb-4 scrollbar-hide mb-6">
-     <button onclick="filterCategory('all')" class="category-btn active flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="all"> 🍱 Todos </button> <button onclick="filterCategory('combos')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="combos"> 🎁 Combos </button> <button onclick="filterCategory('sushis')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="sushis"> 🍣 Sushis </button> <button onclick="filterCategory('sashimis')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="sashimis"> 🐟 Sashimis </button> <button onclick="filterCategory('temakis')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="temakis"> 🌯 Temakis </button> <button onclick="filterCategory('hot')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="hot"> 🔥 Hot Rolls </button> <button onclick="filterCategory('bebidas')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="bebidas"> 🥤 Bebidas </button>
+   <main class="max-w-6xl mx-auto px-4 py-6"><!-- Category Filter -->
+    <div class="flex gap-2 overflow-x-auto pb-4 scrollbar-hide mb-6"><button onclick="filterCategory('all')" class="category-btn active flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="all"> 🍱 Todos </button> <button onclick="filterCategory('combos')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="combos"> 🎁 Combos </button> <button onclick="filterCategory('sushis')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="sushis"> 🍣 Sushis </button> <button onclick="filterCategory('sashimis')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="sashimis"> 🐟 Sashimis </button> <button onclick="filterCategory('temakis')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="temakis"> 🌯 Temakis </button> <button onclick="filterCategory('hot')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="hot"> 🔥 Hot Rolls </button> <button onclick="filterCategory('bebidas')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all bg-white/10 text-white hover:bg-red-600" data-category="bebidas"> 🥤 Bebidas </button>
     </div>
-    <div class="flex gap-6">
-     <!-- Menu Grid -->
+    <div class="flex gap-6"><!-- Menu Grid -->
      <div class="flex-1">
-      <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-       <!-- Items will be rendered here -->
+      <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"><!-- Items will be rendered here -->
       </div>
      </div><!-- Cart Sidebar Desktop -->
      <aside id="cart-sidebar" class="hidden md:block w-80 flex-shrink-0">
       <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 sticky top-4 border border-white/10">
        <div class="flex items-center gap-2 mb-4">
-        <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+        <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
         </svg>
         <h2 class="text-white font-semibold">Seu Pedido</h2><span id="cart-count-desktop" class="ml-auto bg-red-600 text-white text-xs px-2 py-0.5 rounded-full">0</span>
        </div>
        <div id="cart-items-desktop" class="space-y-3 max-h-64 overflow-y-auto mb-4">
         <p class="text-gray-400 text-sm text-center py-4">Carrinho vazio</p>
        </div>
-       <div class="border-t border-white/10 pt-4 mb-4"><label class="block text-white text-sm font-medium mb-2">📍 Endereço</label> <input id="address-desktop" type="text" placeholder="Rua, número, bairro..." class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all">
+       <div class="border-t border-white/10 pt-4 mb-4">
+        <label class="block text-white text-sm font-medium mb-2">📍 Endereço</label> <input id="address-desktop" type="text" placeholder="Rua, número, bairro..." class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all">
        </div>
-       <div class="border-b border-white/10 pb-4"><label class="block text-white text-sm font-medium mb-2">💳 Forma de Pagamento</label> <select id="payment-desktop" class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all"> <option value="" class="bg-gray-900">Selecione a forma de pagamento</option> <option value="dinheiro" class="bg-gray-900">💵 Dinheiro</option> <option value="cartao" class="bg-gray-900">💳 Cartão de Crédito</option> <option value="debito" class="bg-gray-900">🏧 Cartão de Débito</option> <option value="pix" class="bg-gray-900">📱 PIX</option> </select>
+       <div class="border-b border-white/10 pb-4">
+        <label class="block text-white text-sm font-medium mb-2">💳 Forma de Pagamento</label> <select id="payment-desktop" class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all"> <option value="" class="bg-gray-900">Selecione a forma de pagamento</option> <option value="dinheiro" class="bg-gray-900">💵 Dinheiro</option> <option value="cartao" class="bg-gray-900">💳 Cartão de Crédito</option> <option value="debito" class="bg-gray-900">🏧 Cartão de Débito</option> <option value="pix" class="bg-gray-900">📱 PIX</option> </select>
        </div>
        <div class="pt-4">
-        <div class="flex justify-between text-white mb-1">
-         <span class="text-gray-300">Subtotal:</span> <span id="cart-subtotal-desktop">R$ 0,00</span>
+        <div class="flex justify-between text-white mb-1"><span class="text-gray-300">Subtotal:</span> <span id="cart-subtotal-desktop">R$ 0,00</span>
         </div>
-        <div class="flex justify-between text-white mb-4">
-         <span class="text-gray-300">Taxa de entrega:</span> <span id="delivery-fee-desktop" class="text-green-400">Grátis</span>
+        <div class="flex justify-between text-white mb-4"><span class="text-gray-300">Taxa de entrega:</span> <span id="delivery-fee-desktop" class="text-green-400">Grátis</span>
         </div>
-        <div class="flex justify-between text-white font-bold text-lg mb-4">
-         <span>Total:</span> <span id="cart-total-desktop">R$ 0,00</span>
+        <div class="flex justify-between text-white font-bold text-lg mb-4"><span>Total:</span> <span id="cart-total-desktop">R$ 0,00</span>
         </div><button id="checkout-btn-desktop" onclick="checkout()" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none" disabled>
-         <svg class="w-5 h-5" viewbox="0 0 24 24" fill="currentColor">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+         <svg class="w-5 h-5" viewbox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
          </svg> Fazer Pedido </button>
        </div>
       </div>
@@ -136,45 +124,39 @@
     <div class="cart-panel absolute right-0 top-0 h-full w-full max-w-md bg-gradient-to-b from-gray-900 to-gray-950 p-6 overflow-y-auto">
      <div class="flex items-center justify-between mb-6">
       <div class="flex items-center gap-2">
-       <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+       <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
        </svg>
        <h2 class="text-xl font-bold text-white">Seu Pedido</h2>
       </div><button onclick="toggleCart()" class="text-gray-400 hover:text-white p-2">
-       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
        </svg></button>
      </div>
      <div id="cart-items-mobile" class="space-y-4 mb-6">
       <p class="text-gray-400 text-center py-8">Carrinho vazio</p>
      </div>
-     <div class="border-t border-white/10 pt-4 mb-4"><label class="block text-white text-sm font-medium mb-2">📍 Endereço</label> <input id="address-mobile" type="text" placeholder="Rua, número, bairro..." class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all">
+     <div class="border-t border-white/10 pt-4 mb-4">
+      <label class="block text-white text-sm font-medium mb-2">📍 Endereço</label> <input id="address-mobile" type="text" placeholder="Rua, número, bairro..." class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all">
      </div>
-     <div class="border-b border-white/10 pb-4"><label class="block text-white text-sm font-medium mb-2">💳 Forma de Pagamento</label> <select id="payment-mobile" class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all"> <option value="" class="bg-gray-900">Selecione a forma de pagamento</option> <option value="dinheiro" class="bg-gray-900">💵 Dinheiro</option> <option value="cartao" class="bg-gray-900">💳 Cartão de Crédito</option> <option value="debito" class="bg-gray-900">🏧 Cartão de Débito</option> <option value="pix" class="bg-gray-900">📱 PIX</option> </select>
+     <div class="border-b border-white/10 pb-4">
+      <label class="block text-white text-sm font-medium mb-2">💳 Forma de Pagamento</label> <select id="payment-mobile" class="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-red-500 focus:bg-white/20 transition-all"> <option value="" class="bg-gray-900">Selecione a forma de pagamento</option> <option value="dinheiro" class="bg-gray-900">💵 Dinheiro</option> <option value="cartao" class="bg-gray-900">💳 Cartão de Crédito</option> <option value="debito" class="bg-gray-900">🏧 Cartão de Débito</option> <option value="pix" class="bg-gray-900">📱 PIX</option> </select>
      </div>
      <div class="pt-4 mt-auto">
-      <div class="flex justify-between text-white mb-2">
-       <span class="text-gray-300">Subtotal:</span> <span id="cart-subtotal-mobile">R$ 0,00</span>
+      <div class="flex justify-between text-white mb-2"><span class="text-gray-300">Subtotal:</span> <span id="cart-subtotal-mobile">R$ 0,00</span>
       </div>
-      <div class="flex justify-between text-white mb-4">
-       <span class="text-gray-300">Taxa de entrega:</span> <span id="delivery-fee-mobile" class="text-green-400">Grátis</span>
+      <div class="flex justify-between text-white mb-4"><span class="text-gray-300">Taxa de entrega:</span> <span id="delivery-fee-mobile" class="text-green-400">Grátis</span>
       </div>
-      <div class="flex justify-between text-white font-bold text-xl mb-6">
-       <span>Total:</span> <span id="cart-total-mobile">R$ 0,00</span>
+      <div class="flex justify-between text-white font-bold text-xl mb-6"><span>Total:</span> <span id="cart-total-mobile">R$ 0,00</span>
       </div><button id="checkout-btn-mobile" onclick="checkout()" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-4 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-       <svg class="w-6 h-6" viewbox="0 0 24 24" fill="currentColor">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+       <svg class="w-6 h-6" viewbox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
        </svg> Fazer Pedido no WhatsApp </button>
      </div>
     </div>
    </div><!-- Toast Notification -->
    <div id="toast" class="fixed bottom-20 md:bottom-6 left-1/2 -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-2 transition-all transform translate-y-20 opacity-0 z-50">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
     </svg><span id="toast-message">Item adicionado!</span>
    </div><!-- Floating Cart Button Mobile --> <button id="floating-cart" onclick="toggleCart()" class="md:hidden fixed bottom-6 right-6 bg-gradient-to-r from-red-500 to-red-600 text-white p-4 rounded-full shadow-2xl z-40 transition-all transform hover:scale-110 hidden">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
-     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
     </svg><span id="floating-cart-badge" class="absolute -top-1 -right-1 bg-yellow-400 text-gray-900 text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">0</span> </button>
   </div>
   <script>
@@ -183,13 +165,52 @@
     let isAdmin = false;
     let isInitialized = false;
     let dashboardActive = false;
+    let diagnosticLogs = [];
 
-    // Sistema de debug
+    // Sistema de debug com histórico
     const debugLog = {
-      info: (msg) => { console.log('ℹ️ ' + msg); },
-      success: (msg) => { console.log('✅ ' + msg); },
-      error: (msg) => { console.error('❌ ' + msg); },
-      warn: (msg) => { console.warn('⚠️ ' + msg); }
+      info: (msg) => { 
+        console.log('ℹ️ ' + msg); 
+        diagnosticLogs.push({time: new Date().toISOString(), level: 'INFO', msg});
+      },
+      success: (msg) => { 
+        console.log('✅ ' + msg); 
+        diagnosticLogs.push({time: new Date().toISOString(), level: 'SUCCESS', msg});
+      },
+      error: (msg) => { 
+        console.error('❌ ' + msg); 
+        diagnosticLogs.push({time: new Date().toISOString(), level: 'ERROR', msg});
+      },
+      warn: (msg) => { 
+        console.warn('⚠️ ' + msg); 
+        diagnosticLogs.push({time: new Date().toISOString(), level: 'WARN', msg});
+      },
+      showDiagnostics: () => {
+        console.clear();
+        console.log('%c=== DIAGNÓSTICO COMPLETO ===', 'color: #0066cc; font-size: 14px; font-weight: bold;');
+        console.log('%cData SDK Status:', 'color: #0066cc; font-weight: bold;');
+        console.log('window.dataSdk existe?', !!window.dataSdk);
+        console.log('isInitialized?', isInitialized);
+        console.log('Pedidos no banco?', allOrders.length);
+        console.log('\n%cHistórico de Logs:', 'color: #0066cc; font-weight: bold;');
+        diagnosticLogs.forEach(log => {
+          const colors = {
+            'INFO': 'color: #0066cc',
+            'SUCCESS': 'color: #00cc00',
+            'ERROR': 'color: #cc0000',
+            'WARN': 'color: #ffaa00'
+          };
+          console.log(`%c[${log.time}] ${log.level}: ${log.msg}`, colors[log.level] || 'color: #666');
+        });
+        console.log('\n%cPróximos passos:', 'color: #0066cc; font-weight: bold;');
+        if (!window.dataSdk) {
+          console.log('❌ Data SDK não carregou! Verifique se /_sdk/data_sdk.js está acessível');
+        } else if (!isInitialized) {
+          console.log('❌ Data SDK não foi inicializado. Procure por erros acima.');
+        } else {
+          console.log('✅ Tudo pronto! Você pode fazer um pedido agora.');
+        }
+      }
     };
 
     const dataHandler = {
@@ -1068,8 +1089,24 @@
       }
     }
 
+    // Diagnostic button (visible na página)
+    function addDiagnosticButton() {
+      if (!document.getElementById('diagnostic-btn')) {
+        const diagnosticBtn = document.createElement('button');
+        diagnosticBtn.id = 'diagnostic-btn';
+        diagnosticBtn.className = 'fixed bottom-6 left-6 bg-purple-600 hover:bg-purple-700 text-white w-14 h-14 rounded-full shadow-xl flex items-center justify-center text-2xl transition-all hover:scale-110 z-30';
+        diagnosticBtn.innerHTML = '🔧';
+        diagnosticBtn.title = 'Ver Diagnóstico (Clique aqui se o pedido não aparecer)';
+        diagnosticBtn.onclick = () => debugLog.showDiagnostics();
+        document.body.appendChild(diagnosticBtn);
+      }
+    }
+
     // Call addAdminButton on page load
-    window.addEventListener('DOMContentLoaded', addAdminButton);
+    window.addEventListener('DOMContentLoaded', () => {
+      addAdminButton();
+      addDiagnosticButton();
+    });
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d6cae80f23d8860',t:'MTc3MjU4MzI3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d6cb25f27868860',t:'MTc3MjU4MzQzNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
