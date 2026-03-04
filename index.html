@@ -3,60 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shimeji Sushi Delivery</title>
+    <title>Cardápio Digital Estilo Brenda</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: 'Noto Sans JP', sans-serif; background-color: #0f172a; color: white; overflow-x: hidden; }
-        .font-display { font-family: 'Playfair Display', serif; }
-        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .active-cat { background-color: #ef4444 !important; border-color: #ef4444 !important; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        .cart-modal { display: none; }
+        .cart-modal.active { display: flex; }
     </style>
 </head>
-<body class="pb-20 md:pb-0">
+<body class="bg-gray-50 pb-32">
 
-    <header class="relative h-64 flex flex-col items-center justify-center text-center px-4 border-b border-white/5 bg-slate-900">
-        <div class="absolute inset-0 opacity-30">
-            <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=1000&q=80" class="w-full h-full object-cover">
+    <header class="bg-red-600 text-white p-6 shadow-md text-center">
+        <div class="w-20 h-20 bg-white rounded-full mx-auto mb-2 flex items-center justify-center">
+            <i class="fas fa-utensils text-red-600 text-3xl"></i>
         </div>
-        <div onclick="openAdmin()" class="relative z-10 cursor-pointer hover:scale-105 transition-transform">
-            <h1 class="text-4xl md:text-6xl font-display font-bold text-white drop-shadow-lg">🍣 Shimeji Sushi</h1>
-            <p class="text-red-500 tracking-[0.3em] uppercase text-xs md:text-sm mt-2 font-bold">O melhor do Japão na sua mesa</p>
-        </div>
+        <h1 class="text-2xl font-bold italic">BURGER MASTER</h1>
+        <p class="text-sm opacity-90"><i class="fas fa-clock"></i> Aberto agora (Entrega em 40min)</p>
     </header>
 
-    <main class="max-w-6xl mx-auto p-4 md:p-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
-        <div class="lg:col-span-2">
-            <div class="flex gap-3 overflow-x-auto pb-6 no-scrollbar">
-                <button onclick="filterItems('all')" class="cat-btn active-cat px-6 py-2 rounded-full glass text-sm font-bold transition-all flex-shrink-0">🍱 Todos</button>
-                <button onclick="filterItems('combos')" class="cat-btn px-6 py-2 rounded-full glass text-sm font-bold transition-all flex-shrink-0">🎁 Combos</button>
-                <button onclick="filterItems('sushis')" class="cat-btn px-6 py-2 rounded-full glass text-sm font-bold transition-all flex-shrink-0">🍣 Sushis</button>
-                <button onclick="filterItems('bebidas')" class="cat-btn px-6 py-2 rounded-full glass text-sm font-bold transition-all flex-shrink-0">🥤 Bebidas</button>
-            </div>
+    <nav class="flex overflow-x-auto p-4 space-x-4 sticky top-0 bg-white z-10 shadow-sm">
+        <button class="bg-red-100 text-red-600 px-4 py-1 rounded-full font-bold whitespace-nowrap">Burgers</button>
+        <button class="bg-gray-100 text-gray-600 px-4 py-1 rounded-full font-bold whitespace-nowrap">Bebidas</button>
+        <button class="bg-gray-100 text-gray-600 px-4 py-1 rounded-full font-bold whitespace-nowrap">Combos</button>
+    </nav>
 
-            <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                </div>
+    <main class="p-4 max-w-lg mx-auto space-y-4" id="menu">
+        <div class="bg-white p-3 rounded-xl shadow-sm flex border border-gray-100 items-center justify-between">
+            <div class="flex-1">
+                <h3 class="font-bold text-gray-800">Cheddar Bacon</h3>
+                <p class="text-xs text-gray-500">Pão, carne 150g, muito cheddar e bacon crocante.</p>
+                <span class="text-green-600 font-bold block mt-1">R$ 28,90</span>
+            </div>
+            <button onclick="addToCart('Cheddar Bacon', 28.90)" class="bg-red-500 text-white w-10 h-10 rounded-lg flex items-center justify-center ml-4">
+                <i class="fas fa-plus"></i>
+            </button>
         </div>
 
-        <aside class="hidden lg:block">
-            <div class="glass p-6 rounded-3xl sticky top-8">
-                <h2 class="text-xl font-bold mb-6 flex items-center gap-2">🛒 Seu Carrinho</h2>
-                <div id="cart-list" class="space-y-4 mb-6 max-h-60 overflow-y-auto pr-2">
-                    <p class="text-gray-500 text-center py-4 text-sm">Carrinho vazio</p>
-                </div>
-                
-                <div class="border-t border-white/10 pt-4 space-y-3">
-                    <input id="addr-desk" type="text" placeholder="Endereço de entrega" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-red-500 outline-none">
-                    <select id="pay-desk" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none">
-                        <option value="" class="bg-slate-900">Forma de Pagamento</option>
-                        <option value="Pix" class="bg-slate-900">📱 Pix</option>
-                        <option value="Cartão" class="bg-slate-900">💳 Cartão</option>
-                        <option value="Dinheiro" class="bg-slate-900">💵 Dinheiro</option>
-                    </select>
-                    
-                    <div class="flex justify-between items-center py-2 font-bold text-lg">
-                        <span>Total:</span>
-                        <span id="cart-total" class="text-green-400">R$
+        <div class="bg-white p-3 rounded-xl shadow-sm flex border border-gray-100 items-center justify-between">
+            <div class="flex-1">
+                <h3 class="font-bold text-gray-800">Coca-Cola Lata</h3>
+                <p class="text-xs text-gray-500">Geladinha 350ml.</p>
+                <span class="text-green-600 font-bold block mt-1">R$ 6,00</span>
+            </div>
+            <button onclick="addToCart('Coca-Cola Lata', 6.00)" class="bg-red-500 text-white w-10 h-10 rounded-lg flex items-center justify-center ml-4">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+    </main>
+
+    <div id="cart-footer" class="fixed bottom-0 left-0 right-0 bg-white p-4 border-t shadow-[0_-5px_15px_rgba(0,0,0,0.1)] hidden justify-between items-center z-20">
+        <div>
+            <p class="text-xs text-gray-400">Total do pedido:</p>
+            <p id="cart-total" class="text-xl font-bold text-green-600">R$ 0,00</p>
+        </div>
+        <button onclick="toggleModal()" class="bg-red-600 text-white px-8 py-3 rounded-xl font-bold">
+            Ver Pedido <i class="fas fa-shopping-cart ml-2"></i>
+        </button>
+    </div>
+
+    <div id="modal" class="cart-modal fixed inset-0 bg-black bg-opacity-50 z-30 flex-col justify-end p-4">
+        <div class="bg-white rounded-t-3xl w-full max-w-lg mx-auto p-6 overflow-y-auto max-h-[90vh]">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold">Finalizar Pedido</h2>
+                <button onclick="toggleModal()" class="text-gray-400 text-2xl">&times;</button>
+            </div>
+
+            <div class="space-y-4 mb-6">
+                <input id="nome" type="text" placeholder="Seu Nome" class="w-full border p-3 rounded-lg">
+                <input id="rua" type="text" placeholder="Rua e
