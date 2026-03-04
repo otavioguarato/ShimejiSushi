@@ -1,156 +1,46 @@
-// --- ESTADO DO APP ---
+<script>
+    // 1. ESTADO GLOBAL (Unificado)
     let cart = [];
+    let allOrders = []; // Onde os pedidos do admin ficam
     let currentCategory = 'all';
-    
+    let isInitialized = false;
+
+    // 2. CONFIGURAÇÃO PADRÃO
     const defaultConfig = {
       restaurant_name: "🍄 Shimeji Sushi Delivery",
-      restaurant_slogan: "Sabor autêntico do Japão entregue na sua casa",
-      whatsapp_number: "553499365141",
-      admin_password: "todopoderoso"
+      admin_password: "todopoderoso",
+      whatsapp_number: "553499365141"
     };
 
-    // --- INICIALIZAÇÃO DO ELEMENT SDK ---
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig,
-        onConfigChange: (config) => {
-          document.getElementById('restaurant-name').textContent = config.restaurant_name || defaultConfig.restaurant_name;
-        }
-      });
-    }
+    // 3. INICIALIZAÇÃO SEGURA DO DATA SDK
+    const dataHandler = {
+      onDataChanged: (data) => {
+        console.log("🔄 Dados Recebidos:", data);
+        allOrders = Array.isArray(data) ? data : [];
+        if (document.getElementById('admin-view')) renderAdminList();
+      }
+    };
 
-    // --- FUNÇÕES DO CARDÁPIO ---
+    (async () => {
+      try {
+        if (window.dataSdk) {
+          const result = await window.dataSdk.init(dataHandler);
+          if (result && result.isOk) isInitialized = true;
+        }
+      } catch (e) { console.error("Erro SDK:", e); }
+    })();
+
+    // 4. FUNÇÕES DO CARDÁPIO (Renderização)
     function renderMenu() {
       const grid = document.getElementById('menu-grid');
+      if (!grid) return;
       const filtered = currentCategory === 'all' ? menuItems : menuItems.filter(i => i.category === currentCategory);
       
       grid.innerHTML = filtered.map(item => `
         <div class="menu-item bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
           <div class="text-4xl mb-2">${item.emoji}</div>
-          <h3 class="text-white font-semibold">${item.name}</h3>
-          <p class="text-gray-400 text-xs mb-3">${item.description}</p>
+          <h3 class="text-white font-semibold text-sm md:text-base">${item.name}</h3>
+          <p class="text-gray-400 text-xs mb-3 line-clamp-2">${item.description}</p>
           <div class="flex items-center justify-between">
-            <span class="text-red-400 font-bold">R$ ${item.price.toFixed(2)}</span>
-            <button onclick="addToCart(${item.id})" class="bg-red-600 text-white px-3 py-1 rounded-lg text-sm">Add +</button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function filterCategory(cat) {
-      currentCategory = cat;
-      document.querySelectorAll('.category-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.category === cat));
-      renderMenu();
-    }
-
-    // --- LOGICA DO CARRINHO ---
-    function addToCart(id) {
-      const item = menuItems.find(i => i.id === id);
-      const exists = cart.find(i => i.id === id);
-      if (exists) exists.quantity++; else cart.push({...item, quantity: 1});
-      updateCart();
-      showToast("Adicionado!");
-    }
-
-    function removeFromCart(id) {
-      const idx = cart.findIndex(i => i.id === id);
-      if (idx > -1) {
-        if (cart[idx].quantity > 1) cart[idx].quantity--;
-        else cart.splice(idx, 1);
-      }
-      updateCart();
-    }
-
-    function updateCart() {
-      const subtotal = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
-      const totalItems = cart.reduce((s, i) => s + i.quantity, 0);
-      
-      // Atualiza Badges
-      const b = document.getElementById('cart-badge-mobile');
-      b.textContent = totalItems;
-      b.classList.toggle('hidden', totalItems === 0);
-      document.getElementById('floating-cart').classList.toggle('hidden', totalItems === 0);
-      document.getElementById('floating-cart-badge').textContent = totalItems;
-
-      const render = (id) => {
-        const el = document.getElementById(id);
-        if (cart.length === 0) { el.innerHTML = '<p class="text-gray-400 text-center py-4">Vazio</p>'; return; }
-        el.innerHTML = cart.map(i => `
-          <div class="flex justify-between text-white text-sm bg-white/5 p-2 rounded mb-1">
-            <span>${i.quantity}x ${i.name}</span>
-            <button onclick="removeFromCart(${i.id})" class="text-red-500 font-bold">X</button>
-          </div>
-        `).join('');
-      };
-
-      render('cart-items-desktop');
-      render('cart-items-mobile');
-
-      const total = subtotal + (subtotal >= 80 || subtotal === 0 ? 0 : 10);
-      document.getElementById('cart-total-desktop').textContent = `R$ ${total.toFixed(2)}`;
-      document.getElementById('cart-total-mobile').textContent = `R$ ${total.toFixed(2)}`;
-      
-      document.getElementById('checkout-btn-desktop').disabled = cart.length === 0;
-      document.getElementById('checkout-btn-mobile').disabled = cart.length === 0;
-    }
-
-    function toggleCart() { document.getElementById('cart-modal').classList.toggle('hidden'); }
-    function showToast(m) { 
-      const t = document.getElementById('toast'); 
-      document.getElementById('toast-message').textContent = m;
-      t.classList.replace('opacity-0', 'opacity-100');
-      setTimeout(() => t.classList.replace('opacity-100', 'opacity-0'), 2000);
-    }
-
-    // --- SISTEMA DE INTERAÇÃO CLIENTE > ADMIN ---
-    async function checkout() {
-      const isMob = window.innerWidth < 768;
-      const addr = document.getElementById(`address-${isMob ? 'mobile' : 'desktop'}`).value;
-      const pay = document.getElementById(`payment-${isMob ? 'mobile' : 'desktop'}`).value;
-
-      if (!addr || !pay) { alert("Preencha endereço e pagamento!"); return; }
-
-      const novoPedido = {
-        id: Date.now(),
-        itens: cart.map(i => ({name: i.name, qty: i.quantity})),
-        total: cart.reduce((s, i) => s + (i.price * i.quantity), 0),
-        endereco: addr,
-        pagamento: pay,
-        status: 'pendente',
-        data: new Date().toLocaleTimeString()
-      };
-
-      // SALVA NO DATA SDK (Interação com Dashboard)
-      if (window.dataSdk && isInitialized) {
-        await window.dataSdk.save(novoPedido);
-      }
-
-      window.open(`https://wa.me/553499365141?text=Novo Pedido Shimeji: R$ ${novoPedido.total.toFixed(2)}`);
-      cart = [];
-      updateCart();
-      if(isMob) toggleCart();
-      showToast("Pedido Enviado!");
-    }
-
-    // --- PAINEL ADMIN ---
-    function openAdmin() {
-      const p = prompt("Senha:");
-      if (p === "todopoderoso") {
-        document.body.insertAdjacentHTML('beforeend', `
-          <div id="admin-view" class="fixed inset-0 bg-slate-900 z-[100] p-6 text-white overflow-auto">
-            <div class="flex justify-between mb-6">
-              <h2 class="text-2xl font-bold text-red-500">🍣 Dash Pedidos</h2>
-              <button onclick="document.getElementById('admin-view').remove()" class="bg-white/10 px-4 py-2 rounded">Fechar</button>
-            </div>
-            <div id="admin-list" class="space-y-4"></div>
-          </div>
-        `);
-        renderAdminList();
-      }
-    }
-
-    function renderAdminList() {
-      const list = document.getElementById('admin-list');
-      if (!list) return;
-      list.innerHTML = allOrders.length === 0 ? "Nenhum pedido recebido." : allOrders.map(o => `
-        <div class="bg-white/5 p-4 rounded-xl border border
+            <span class="text-red-400 font-bold text-sm">R$ ${item.price.toFixed(2)}</span>
+            <button onclick="addToCart(${item.id})" class="bg-red-600 text-white px-3 py-1 rounded-lg text-xs font-bold hover:bg-red-500 transition-colors">ADD
