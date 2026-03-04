@@ -1,192 +1,61 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardápio Digital de Sushi</title>
-    <style>
-        /* AQUI VOCÊ PODE COLOCAR SEUS ESTILOS CSS */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            background-color: #f8f8f8;
-            color: #333;
-        }
-        .container {
-            max-width: 960px;
-            margin: 20px auto;
-            padding: 0 15px;
-        }
-        header {
-            text-align: center;
-            padding: 30px 0;
-            background-color: #fff;
-            border-bottom: 1px solid #eee;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        .logo {
-            max-width: 150px;
-            height: auto;
-            margin-bottom: 15px;
-        }
-        h1 {
-            color: #d32f2f; /* Um vermelho que lembra sushi */
-            font-size: 2.5em;
-            margin: 0;
-        }
-        .description {
-            font-size: 1.1em;
-            color: #666;
-            margin-top: 10px;
-        }
-        nav.categories {
-            background-color: #333;
-            padding: 15px 0;
-            text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        nav.categories ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        nav.categories ul li {
-            margin: 0 15px;
-        }
-        nav.categories ul li a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 8px 12px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        nav.categories ul li a:hover,
-        nav.categories ul li a.active {
-            background-color: #d32f2f;
-        }
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        .menu-section {
-            background-color: #fff;
-            margin-top: 25px;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-        .menu-section h2 {
-            color: #d32f2f;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2em;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 15px;
-        }
-        .menu-items {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-        .menu-item {
-            display: flex;
-            background-color: #fff;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: transform 0.2s ease-in-out;
-        }
-        .menu-item:hover {
-            transform: translateY(-5px);
-        }
-        .menu-item-image {
-            width: 120px; /* Largura da imagem do item */
-            height: 120px;
-            object-fit: cover;
-            flex-shrink: 0;
-            border-right: 1px solid #eee;
-        }
-        .menu-item-details {
-            padding: 15px;
-            flex-grow: 1;
-        }
-        .menu-item-details h3 {
-            margin-top: 0;
-            margin-bottom: 8px;
-            color: #333;
-            font-size: 1.3em;
-        }
-        .menu-item-details p {
-            font-size: 0.9em;
-            color: #777;
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-        .menu-item-price {
-            font-weight: bold;
-            color: #d32f2f;
-            font-size: 1.2em;
-        }
-        footer {
-            text-align: center;
-            padding: 30px 0;
-            margin-top: 40px;
-            background-color: #333;
-            color: #fff;
-            font-size: 0.9em;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <img src="https://via.placeholder.com/150x80?text=Sua+Logo" alt="Logo do seu Sushi Delivery" class="logo">
-            <h1>Seu Sushi Delivery</h1>
-            <p class="description">Os melhores e mais frescos sushis da cidade, feitos com carinho para você!</p>
-        </header>
+  // SUAS CREDENCIAIS COPIADAS DO CONSOLE
+  const firebaseConfig = {
+    apiKey: "SUA_API_KEY",
+    authDomain: "seu-projeto.firebaseapp.com",
+    projectId: "seu-projeto",
+    storageBucket: "seu-projeto.appspot.com",
+    messagingSenderId: "seu-id",
+    appId: "seu-app-id"
+  };
 
-        <nav class="categories">
-            <ul>
-                <li><a href="#hots" class="active">Hots</a></li>
-                <li><a href="#uramaki">Uramaki</a></li>
-                <li><a href="#niguiri">Niguiri</a></li>
-                <li><a href="#temaki">Temaki</a></li>
-                <li><a href="#combinados">Combinados</a></li>
-                <li><a href="#bebidas">Bebidas</a></li>
-            </ul>
-        </nav>
+  // Inicializar Firebase e Firestore
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-        <main>
-            <section id="hots" class="menu-section">
-                <h2>Hots</h2>
-                <div class="menu-items">
-                    <div class="menu-item">
-                        <img src="https://via.placeholder.com/120x120?text=Hot+Roll" alt="Hot Roll Philadelphia" class="menu-item-image">
-                        <div class="menu-item-details">
-                            <h3>Hot Roll Philadelphia</h3>
-                            <p>Delicioso hot roll empanado e frito, recheado com salmão, cream cheese e cebolinha.</p>
-                            <span class="menu-item-price">R$ 29,90</span>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <img src="https://via.placeholder.com/120x120?text=Hot+Crocante" alt="Hot Crocante de Camarão" class="menu-item-image">
-                        <div class="menu-item-details">
-                            <h3>Hot Crocante de Camarão</h3>
-                            <p>Camarão empanado, cream cheese, envolto em arroz e alga, frito e coberto com molho especial.</p>
-                            <span class="menu-item-price">R$ 34,50</span>
-                        </div>
-                    </div>
-                    <!-- Mais itens de Hot aqui -->
-                </div>
-            </section>
+  // Função para salvar pedido no servidor (Firebase)
+  async function saveOrderToFirebase(orderData) {
+    try {
+      const docRef = await addDoc(collection(db, "pedidos"), {
+        ...orderData,
+        status: "pendente",
+        createdAt: serverTimestamp()
+      });
+      console.log("Pedido enviado com ID: ", docRef.id);
+      return docRef.id;
+    } catch (e) {
+      console.error("Erro ao salvar pedido: ", e);
+      throw e;
+    }
+  }
 
-            <section id="uramaki" class="menu-section">
-                <h2>Uramaki</h2>
-                <div class="menu-items">
-                    <div class="menu-item">
-                        <img src="https://via.placeholder.com/1
+  // Integrar com sua função de checkout existente
+  window.finalizarPedido = async () => {
+    const isMobile = window.innerWidth < 768;
+    const address = document.getElementById(isMobile ? 'address-mobile' : 'address-desktop').value;
+    const payment = document.getElementById(isMobile ? 'payment-mobile' : 'payment-desktop').value;
+
+    if (!address || !payment || cart.length === 0) {
+      alert("Preencha todos os dados!");
+      return;
+    }
+
+    const orderData = {
+      itens: cart,
+      total: cart.reduce((sum, i) => sum + (i.price * i.quantity), 0),
+      endereco: address,
+      pagamento: payment,
+      cliente: "Cliente Web" // Você pode adicionar um campo de nome no HTML
+    };
+
+    // 1. Envia para o Banco de Dados (Servidor)
+    showToast("Enviando pedido...");
+    await saveOrderToFirebase(orderData);
+
+    // 2. Abre o WhatsApp como confirmação (Cliente)
+    checkout(); // Chama sua função existente que formata o Zap
+  };
+</script>
