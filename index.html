@@ -1,73 +1,192 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cardápio Digital Estilo Brenda</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Cardápio Digital de Sushi</title>
     <style>
-        .cart-modal { display: none; }
-        .cart-modal.active { display: flex; }
+        /* AQUI VOCÊ PODE COLOCAR SEUS ESTILOS CSS */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        .container {
+            max-width: 960px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #fff;
+            border-bottom: 1px solid #eee;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .logo {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+        h1 {
+            color: #d32f2f; /* Um vermelho que lembra sushi */
+            font-size: 2.5em;
+            margin: 0;
+        }
+        .description {
+            font-size: 1.1em;
+            color: #666;
+            margin-top: 10px;
+        }
+        nav.categories {
+            background-color: #333;
+            padding: 15px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        nav.categories ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        nav.categories ul li {
+            margin: 0 15px;
+        }
+        nav.categories ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        nav.categories ul li a:hover,
+        nav.categories ul li a.active {
+            background-color: #d32f2f;
+        }
+
+        .menu-section {
+            background-color: #fff;
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .menu-section h2 {
+            color: #d32f2f;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2em;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+        }
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .menu-item {
+            display: flex;
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease-in-out;
+        }
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+        .menu-item-image {
+            width: 120px; /* Largura da imagem do item */
+            height: 120px;
+            object-fit: cover;
+            flex-shrink: 0;
+            border-right: 1px solid #eee;
+        }
+        .menu-item-details {
+            padding: 15px;
+            flex-grow: 1;
+        }
+        .menu-item-details h3 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 1.3em;
+        }
+        .menu-item-details p {
+            font-size: 0.9em;
+            color: #777;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .menu-item-price {
+            font-weight: bold;
+            color: #d32f2f;
+            font-size: 1.2em;
+        }
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 40px;
+            background-color: #333;
+            color: #fff;
+            font-size: 0.9em;
+        }
     </style>
 </head>
-<body class="bg-gray-50 pb-32">
+<body>
+    <div class="container">
+        <header>
+            <img src="https://via.placeholder.com/150x80?text=Sua+Logo" alt="Logo do seu Sushi Delivery" class="logo">
+            <h1>Seu Sushi Delivery</h1>
+            <p class="description">Os melhores e mais frescos sushis da cidade, feitos com carinho para você!</p>
+        </header>
 
-    <header class="bg-red-600 text-white p-6 shadow-md text-center">
-        <div class="w-20 h-20 bg-white rounded-full mx-auto mb-2 flex items-center justify-center">
-            <i class="fas fa-utensils text-red-600 text-3xl"></i>
-        </div>
-        <h1 class="text-2xl font-bold italic">BURGER MASTER</h1>
-        <p class="text-sm opacity-90"><i class="fas fa-clock"></i> Aberto agora (Entrega em 40min)</p>
-    </header>
+        <nav class="categories">
+            <ul>
+                <li><a href="#hots" class="active">Hots</a></li>
+                <li><a href="#uramaki">Uramaki</a></li>
+                <li><a href="#niguiri">Niguiri</a></li>
+                <li><a href="#temaki">Temaki</a></li>
+                <li><a href="#combinados">Combinados</a></li>
+                <li><a href="#bebidas">Bebidas</a></li>
+            </ul>
+        </nav>
 
-    <nav class="flex overflow-x-auto p-4 space-x-4 sticky top-0 bg-white z-10 shadow-sm">
-        <button class="bg-red-100 text-red-600 px-4 py-1 rounded-full font-bold whitespace-nowrap">Burgers</button>
-        <button class="bg-gray-100 text-gray-600 px-4 py-1 rounded-full font-bold whitespace-nowrap">Bebidas</button>
-        <button class="bg-gray-100 text-gray-600 px-4 py-1 rounded-full font-bold whitespace-nowrap">Combos</button>
-    </nav>
+        <main>
+            <section id="hots" class="menu-section">
+                <h2>Hots</h2>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <img src="https://via.placeholder.com/120x120?text=Hot+Roll" alt="Hot Roll Philadelphia" class="menu-item-image">
+                        <div class="menu-item-details">
+                            <h3>Hot Roll Philadelphia</h3>
+                            <p>Delicioso hot roll empanado e frito, recheado com salmão, cream cheese e cebolinha.</p>
+                            <span class="menu-item-price">R$ 29,90</span>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <img src="https://via.placeholder.com/120x120?text=Hot+Crocante" alt="Hot Crocante de Camarão" class="menu-item-image">
+                        <div class="menu-item-details">
+                            <h3>Hot Crocante de Camarão</h3>
+                            <p>Camarão empanado, cream cheese, envolto em arroz e alga, frito e coberto com molho especial.</p>
+                            <span class="menu-item-price">R$ 34,50</span>
+                        </div>
+                    </div>
+                    <!-- Mais itens de Hot aqui -->
+                </div>
+            </section>
 
-    <main class="p-4 max-w-lg mx-auto space-y-4" id="menu">
-        <div class="bg-white p-3 rounded-xl shadow-sm flex border border-gray-100 items-center justify-between">
-            <div class="flex-1">
-                <h3 class="font-bold text-gray-800">Cheddar Bacon</h3>
-                <p class="text-xs text-gray-500">Pão, carne 150g, muito cheddar e bacon crocante.</p>
-                <span class="text-green-600 font-bold block mt-1">R$ 28,90</span>
-            </div>
-            <button onclick="addToCart('Cheddar Bacon', 28.90)" class="bg-red-500 text-white w-10 h-10 rounded-lg flex items-center justify-center ml-4">
-                <i class="fas fa-plus"></i>
-            </button>
-        </div>
-
-        <div class="bg-white p-3 rounded-xl shadow-sm flex border border-gray-100 items-center justify-between">
-            <div class="flex-1">
-                <h3 class="font-bold text-gray-800">Coca-Cola Lata</h3>
-                <p class="text-xs text-gray-500">Geladinha 350ml.</p>
-                <span class="text-green-600 font-bold block mt-1">R$ 6,00</span>
-            </div>
-            <button onclick="addToCart('Coca-Cola Lata', 6.00)" class="bg-red-500 text-white w-10 h-10 rounded-lg flex items-center justify-center ml-4">
-                <i class="fas fa-plus"></i>
-            </button>
-        </div>
-    </main>
-
-    <div id="cart-footer" class="fixed bottom-0 left-0 right-0 bg-white p-4 border-t shadow-[0_-5px_15px_rgba(0,0,0,0.1)] hidden justify-between items-center z-20">
-        <div>
-            <p class="text-xs text-gray-400">Total do pedido:</p>
-            <p id="cart-total" class="text-xl font-bold text-green-600">R$ 0,00</p>
-        </div>
-        <button onclick="toggleModal()" class="bg-red-600 text-white px-8 py-3 rounded-xl font-bold">
-            Ver Pedido <i class="fas fa-shopping-cart ml-2"></i>
-        </button>
-    </div>
-
-    <div id="modal" class="cart-modal fixed inset-0 bg-black bg-opacity-50 z-30 flex-col justify-end p-4">
-        <div class="bg-white rounded-t-3xl w-full max-w-lg mx-auto p-6 overflow-y-auto max-h-[90vh]">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold">Finalizar Pedido</h2>
-                <button onclick="toggleModal()" class="text-gray-400 text-2xl">&times;</button>
-            </div>
-
-            <div class="space-y-4 mb-6">
-                <input id="nome" type="text" placeholder="Seu Nome" class="w-full border p-3 rounded-lg">
-                <input id="rua" type="text" placeholder="Rua e
+            <section id="uramaki" class="menu-section">
+                <h2>Uramaki</h2>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <img src="https://via.placeholder.com/1
