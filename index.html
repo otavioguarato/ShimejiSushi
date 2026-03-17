@@ -1,41 +1,162 @@
-<div class="bottom-nav">
-      <div class="nav-item active" onclick="setNavActive(this)">
-        <i data-lucide="home" class="nav-icon"></i>
-        <span class="nav-label">Home</span>
-      </div>
-      <div class="nav-item" onclick="setNavActive(this)">
-        <i data-lucide="search" class="nav-icon"></i>
-        <span class="nav-label">Buscar</span>
-      </div>
-      <div class="nav-item" onclick="openCart()">
-        <div class="nav-icon-wrap">
-          <i data-lucide="shopping-bag" class="nav-icon" id="cart-icon"></i>
-          <div class="cart-badge" id="cart-count">0</div>
-        </div>
-        <span class="nav-label">Sacola</span>
-        <span class="cart-total-pill" id="cart-total-display">R$ 0,00</span>
-      </div>
-      <div class="nav-item" onclick="setNavActive(this)">
-        <i data-lucide="user" class="nav-icon"></i>
-        <span class="nav-label">Perfil</span>
-      </div>
-    </div>
-  </div> </div> ```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-### Por que o layout "desalinha"?
+<title>Multi Language Website</title>
 
-Existem três causas prováveis que você deve verificar no seu arquivo:
+<style>
 
-* **Tags não fechadas:** Verifique se todas as `<div` que você abriu foram fechadas com `</div>`. No código que você colou, a `phone-frame` e a `app-wrapper` precisavam ser fechadas exatamente antes de fechar o `body`.
-* **Viewport meta tag:** Verifique se a linha abaixo está no seu `<head>`. Sem ela, o navegador ignora que o site é para celular:
-    `<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">`
-* **CSS de Altura:** Como você usou `height: 100%` em tudo, se uma imagem ou elemento dentro do `products-grid` for maior que o espaço, ele vai "quebrar" o layout.
+body{
+font-family:Arial;
+padding:40px;
+background:#f5f5f5;
+}
+
+.language-select{
+padding:8px;
+font-size:16px;
+margin-bottom:20px;
+}
+
+.box{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Language Selector -->
+
+<select class="language-select" id="languageSwitcher">
+
+<option value="en">English</option>
+<option value="hi">Hindi</option>
+<option value="pt">Portuguese</option>
+<option value="es">Spanish</option>
+<option value="fr">French</option>
+<option value="de">German</option>
+<option value="zh">Chinese</option>
+<option value="ja">Japanese</option>
+
+</select>
 
 
+<div class="box">
 
-### Como verificar o erro agora:
-1.  Abra o arquivo no seu navegador (Chrome ou Edge).
-2.  Clique com o botão direito e escolha **"Inspecionar"**.
-3.  Vá na aba **"Console"**. Se aparecer algum erro em vermelho, ele dirá exatamente qual linha está quebrando.
+<h1 data-translate="title">Welcome to my website</h1>
 
-**Você quer que eu lhe envie o arquivo completo e "fechadinho" para você apenas substituir o que você tem aí?** Isso resolveria qualquer erro de sintaxe que tenha acontecido ao colar o código.
+<p data-translate="description">
+This website supports multiple languages.  
+You can switch language using the dropdown.
+</p>
+
+<button data-translate="button">Add to Cart</button>
+
+</div>
+
+
+<script>
+
+const translations = {
+
+en:{
+title:"Welcome to my website",
+description:"This website supports multiple languages. You can switch language using the dropdown.",
+button:"Add to Cart"
+},
+
+hi:{
+title:"मेरी वेबसाइट में आपका स्वागत है",
+description:"यह वेबसाइट कई भाषाओं का समर्थन करती है। आप ड्रॉपडाउन से भाषा बदल सकते हैं।",
+button:"कार्ट में जोड़ें"
+},
+
+pt:{
+title:"Bem-vindo ao meu site",
+description:"Este site suporta vários idiomas. Você pode mudar o idioma usando o menu.",
+button:"Adicionar ao carrinho"
+},
+
+es:{
+title:"Bienvenido a mi sitio web",
+description:"Este sitio web admite varios idiomas. Puede cambiar el idioma usando el menú.",
+button:"Agregar al carrito"
+},
+
+fr:{
+title:"Bienvenue sur mon site",
+description:"Ce site prend en charge plusieurs langues. Vous pouvez changer la langue avec le menu.",
+button:"Ajouter au panier"
+},
+
+de:{
+title:"Willkommen auf meiner Website",
+description:"Diese Website unterstützt mehrere Sprachen. Sie können die Sprache über das Menü ändern.",
+button:"In den Warenkorb"
+},
+
+zh:{
+title:"欢迎来到我的网站",
+description:"本网站支持多种语言。您可以使用菜单切换语言。",
+button:"加入购物车"
+},
+
+ja:{
+title:"私のウェブサイトへようこそ",
+description:"このサイトは複数の言語をサポートしています。",
+button:"カートに追加"
+}
+
+};
+
+
+const languageSwitcher = document.getElementById("languageSwitcher");
+
+
+function translatePage(language){
+
+const elements = document.querySelectorAll("[data-translate]");
+
+elements.forEach(element => {
+
+const key = element.getAttribute("data-translate");
+
+element.textContent = translations[language][key];
+
+});
+
+}
+
+
+languageSwitcher.addEventListener("change",function(){
+
+const selectedLang = this.value;
+
+translatePage(selectedLang);
+
+localStorage.setItem("language",selectedLang);
+
+});
+
+
+window.onload = function(){
+
+const savedLang = localStorage.getItem("language") || "en";
+
+languageSwitcher.value = savedLang;
+
+translatePage(savedLang);
+
+};
+
+</script>
+
+</body>
+</html>
